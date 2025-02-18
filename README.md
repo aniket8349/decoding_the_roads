@@ -22,6 +22,12 @@ python3 -**m venv .venv
 source .venv/bin/activate
 ```
 
+#### Install the required packages	
+
+```python
+pip install -r requirements.txt
+```
+
 #### Create env
 
 Install `python-dotenv`
