@@ -4,10 +4,12 @@ https://www.kaggle.com/datasets/adilshamim8/global-traffic-accidents-dataset
 
 # Setup
 
-#### Create the virtual environment (replace .venv with your preferred name)
+### Create the virtual environment
+
+Using `venv` (recommended for Python 3):(replace .venv with your preferred name)
 
 ```
-python3 -**m venv .venv
+python3 -m venv .venv
 ```
 
 #### **Activate the virtual environment (Windows)**
@@ -22,25 +24,66 @@ python3 -**m venv .venv
 source .venv/bin/activate
 ```
 
-#### Install the required packages	
+#### Install the required packages
 
 ```python
 pip install -r requirements.txt
 ```
 
-#### Create env
+### Create env
 
-Install `python-dotenv`
+#### Install `python-dotenv`
 
 `pip install python-dotenv`
 
-Create a `.env` file
+#### Create a `.env` file
 
 `KAGGLE_DATASET_SLUG=your_actual_dataset_slug`
 
 ---
 
-#### Kaggle API Credentials
+### Mysql setup
+
+#### Install MySQL Server
+
+Follow the instructions to install MySQL Server on your machine:
+
+- [MySQL Installation Guide](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
+
+####  Create a MySQL Database
+
+1. Open MySQL command line or MySQL Workbench.
+2. Create a new database:
+
+   ```sql
+
+   CREATEDATABASE your_database_name;
+
+   ```
+
+
+#### Configure Environment Variables
+
+Create a `.env` file in the root directory of your project and add the following environment variables:
+
+```env
+
+DB=your_mysql_host
+
+DB_USER=your_mysql_user
+
+DB_PASSWORD=your_mysql_password
+
+DB_DATABASE=your_database_name
+
+KAGGLE_DATASET_SLUG=your_kaggle_dataset_slug
+```
+
+
+
+---
+
+### Kaggle API Credentials
 
 1. Go to your Kaggle account settings: https://www.kaggle.com/account
 2. Scroll down to the "API" section and click "Create New API Token". This will download a file named `kaggle.json`.
@@ -73,8 +116,7 @@ Create a `.env` file
 2. Run your Python script:
 
    ```sh
-   python main.py
-
+   python -m zero_.main
    ```
 
 ---
