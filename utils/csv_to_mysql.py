@@ -1,6 +1,7 @@
 import pandas as pd
 import mysql.connector
 from mysql.connector import Error
+from ..config.db_connection import create_connection
 
 
 def csv_to_mysql(db_config, csv_file, table_name, column_names):
@@ -8,13 +9,9 @@ def csv_to_mysql(db_config, csv_file, table_name, column_names):
         # Read CSV file into DataFrame
         df = pd.read_csv(csv_file)
         
-        connection = mysql.connector.connect(
-            host=db_config['host'],
-            user=db_config['user'],
-            password=db_config['password'],
-            database=db_config['database']
-        )
-
+ 
+        connection = create_connection(db_config)
+        
         if connection.is_connected():
             print("Connected to MySQL database")
             cursor = connection.cursor()
