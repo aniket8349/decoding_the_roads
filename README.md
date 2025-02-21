@@ -50,7 +50,7 @@ Follow the instructions to install MySQL Server on your machine:
 
 - [MySQL Installation Guide](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
 
-####  Create a MySQL Database
+#### Create a MySQL Database
 
 1. Open MySQL command line or MySQL Workbench.
 2. Create a new database:
@@ -60,7 +60,6 @@ Follow the instructions to install MySQL Server on your machine:
    CREATEDATABASE your_database_name;
 
    ```
-
 
 #### Configure Environment Variables
 
@@ -78,8 +77,6 @@ DB_DATABASE=your_database_name
 
 KAGGLE_DATASET_SLUG=your_kaggle_dataset_slug
 ```
-
-
 
 ---
 
@@ -116,7 +113,7 @@ KAGGLE_DATASET_SLUG=your_kaggle_dataset_slug
 2. Run your Python script:
 
    ```sh
-   python -m zero_.main
+   python -m decoding_the_roads.main
    ```
 
 ---

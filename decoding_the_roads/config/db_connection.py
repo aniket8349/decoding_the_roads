@@ -1,7 +1,8 @@
 import mysql.connector
-from mysql.connector import Error
+from mysql.connector import Error, MySQLConnection
+from typing import Dict, Optional
 
-def create_connection(db_config):
+def create_connection(db_config: Dict[str, str]) -> Optional[MySQLConnection]:
     try:
         connection = mysql.connector.connect(
             host=db_config['host'],
@@ -14,10 +15,10 @@ def create_connection(db_config):
             return connection
         else:
             print("Failed to connect to MySQL database")
+            return None
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Something is wrong with your user name or password")
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Database does not exist")
+            print("Error: Access denied")
         else:
-            print(err)
+            print(f"Error: {err}")
+        return None

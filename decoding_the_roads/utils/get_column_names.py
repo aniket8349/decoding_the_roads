@@ -1,6 +1,7 @@
 import pandas as pd
+from typing import List, Optional
 
-def get_column_names(csv_file_path):
+def get_column_names(csv_file_path: str) -> Optional[List[str]]:
     """
     Extracts column names from a CSV file using pandas.
 

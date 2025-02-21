@@ -1,10 +1,10 @@
 import pandas as pd
-import mysql.connector
 from mysql.connector import Error
+from typing import Dict, List
 from ..config.db_connection import create_connection
 
 
-def csv_to_mysql(db_config, csv_file, table_name, column_names):
+def csv_to_mysql(db_config:Dict[str, str], csv_file: str, table_name: str, column_names:List[str])-> None:
     try:
         # Read CSV file into DataFrame
         df = pd.read_csv(csv_file)
