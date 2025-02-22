@@ -52,7 +52,7 @@ def main() -> None:
     # print(db_config)
     # check_mysql_connection(db_config)
     column_list: List[str] = get_column_names(csv_file)
-    print(column_list)
+    # print(column_list)
     if column_list:
         csv_to_mysql(db_config, csv_file, table_name, column_list)
     else:

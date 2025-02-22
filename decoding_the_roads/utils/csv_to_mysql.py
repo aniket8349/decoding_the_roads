@@ -1,10 +1,12 @@
 import pandas as pd
-from mysql.connector import Error ,MySQLConnection
+from mysql.connector import Error, MySQLConnection
 from mysql.connector.cursor import MySQLCursor
 from typing import Dict, List
 from ..config.db_connection import create_connection
+from .sql_utils import execute_query , fetch_one
+from ..config.db_config import db_config
 
-def insert_data(cursor: MySQLCursor, table_name: str, column_names: list, df: pd.DataFrame) -> None:
+def insert_data(cursor: MySQLCursor,table_name: str, column_names: list, df: pd.DataFrame) -> None:
     """
     #### Args:
         param cursor: MySQLCursor object 
@@ -28,12 +30,15 @@ def csv_to_mysql(db_config:Dict[str, str], csv_file: str, table_name: str, colum
         connection: MySQLConnection = create_connection(db_config)
         
         if connection.is_connected():
+
             print("Connected to MySQL database")
             cursor: MySQLCursor = connection.cursor()
-            cursor.execute(f"CREATE TABLE IF NOT EXISTS `{table_name}` ({', '.join([f'`{col}` TEXT' for col in column_names])})")
+         
+            execute_query(db_config,f"CREATE TABLE IF NOT EXISTS `{table_name}` ({', '.join([f'`{col}` TEXT' for col in column_names])})")
+      
+            # Check if data is already present in the table
+            result = fetch_one(db_config,f"SELECT COUNT(*) FROM `{table_name}`")
 
-            cursor.execute(f"SELECT COUNT(*) FROM `{table_name}`")
-            result = cursor.fetchone()
             if result[0] > 0: # If data is already present in the table
                 print(f"Data already present in {table_name} table. Skipping insertion.")
            
