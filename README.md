@@ -57,7 +57,7 @@ Follow the instructions to install MySQL Server on your machine:
 
    ```sql
 
-   CREATEDATABASE your_database_name;
+   CREATE DATABASE your_database_name;
 
    ```
 
