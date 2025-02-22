@@ -58,7 +58,7 @@ def main() -> None:
     else:
         print("Failed to get column names from CSV file.")
         
-    show_data(db_config)
+    # show_data(db_config)
 
 
 

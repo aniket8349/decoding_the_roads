@@ -1,5 +1,5 @@
 import mysql.connector
-from mysql.connector import Error, MySQLConnection
+from mysql.connector import Error, errorcode ,MySQLConnection 
 from typing import Dict, Optional
 
 def create_connection(db_config: Dict[str, str]) -> Optional[MySQLConnection]:
@@ -16,7 +16,7 @@ def create_connection(db_config: Dict[str, str]) -> Optional[MySQLConnection]:
         else:
             print("Failed to connect to MySQL database")
             return None
-    except mysql.connector.Error as err:
+    except Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Error: Access denied")
         else:
