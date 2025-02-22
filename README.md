@@ -66,16 +66,10 @@ Follow the instructions to install MySQL Server on your machine:
 Create a `.env` file in the root directory of your project and add the following environment variables:
 
 ```env
-
-DB=your_mysql_host
-
-DB_USER=your_mysql_user
-
-DB_PASSWORD=your_mysql_password
-
-DB_DATABASE=your_database_name
-
-KAGGLE_DATASET_SLUG=your_kaggle_dataset_slug
+MYSQL_HOST=
+MYSQL_USER=
+MYSQL_PASSWORD=
+MYSQL_DATABASE=
 ```
 
 ---
