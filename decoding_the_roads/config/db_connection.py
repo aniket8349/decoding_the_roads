@@ -1,5 +1,7 @@
 import mysql.connector
+
 from mysql.connector import Error, MySQLConnection, errorcode
+
 from typing import Dict, Optional
 
 def create_connection(db_config: Dict[str, str]) -> Optional[MySQLConnection]:
