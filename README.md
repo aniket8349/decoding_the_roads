@@ -110,6 +110,18 @@ MYSQL_DATABASE=
    python -m decoding_the_roads.main
    ```
 
+fastapi dev main.py
+
+```
+uvicorn decoding_the_roads.main:app --reload 
+```
+
+[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+[http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+
+[http://127.0.0.1:8000/openapi.json](http://127.0.0.1:8000/openapi.json)
+
 ---
 
 ---

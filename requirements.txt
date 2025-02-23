@@ -1,6 +1,10 @@
 kaggle
 py-mon
 pandas
+fastapi
+uvicorn[standard]
 mysql-connector-python
 python-dotenv
 matplotlib
+jinja2
+plotly

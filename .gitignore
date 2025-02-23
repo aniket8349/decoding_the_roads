@@ -3,6 +3,10 @@ data/raw
 
 # vscode
 *.vscode/
+
+# test file
+tests/anote.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -153,3 +157,4 @@ Testing/
 /.artifacts/
 # Pypoetry
 /.pypoetry/
+

@@ -1,5 +1,7 @@
-from ..utils.sql_utils import fetch_query_results , execute_query , create_new_table
+from ..utils.sql_utils import fetch_query_results , create_new_table
+from ..config.db_config import db_config
 from typing import Dict
+
 def show_table(db_config:Dict[str,str], table_name: str):
     query: str = f"SELECT * FROM {table_name}"
     return fetch_query_results(db_config, query)
@@ -18,17 +20,20 @@ def create_accident_table(db_config:Dict[str,str]):
 
 def insert_basic_data(db_config:Dict[str,str]):
     insert_data_query = """
-    INSERT INTO accident_data (country, accident_count, year) VALUES
-    ('USA', 1000, 2020),
-    ('Canada', 500, 2020),
-    ('Mexico', 300, 2020)
+    SELECT Location, SUM(Casualties) AS Total_Casualties
+    FROM global_traffic_accidents
+    GROUP BY Location
+    ORDER BY Total_Casualties DESC; 
     """
-    execute_query(db_config, insert_data_query)
-    
-def show_data(db_config:Dict[str,str]):
-      
-    create_accident_table(db_config)
-    insert_basic_data(db_config)
-    data = show_table(db_config, 'accident_data')
+    # execute_query(db_config, insert_data_query)
+    data = fetch_query_results(db_config, insert_data_query)
     print(data)
 
+def show_data(db_config:Dict[str,str]):
+      
+    data = insert_basic_data(db_config)
+    print(data)
+
+
+if __name__ == "__main__":
+    insert_basic_data(db_config)
