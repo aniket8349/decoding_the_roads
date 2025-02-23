@@ -31,4 +31,5 @@ def show_data(db_config:Dict[str,str]):
     insert_basic_data(db_config)
     data = show_table(db_config, 'accident_data')
     print(data)
+    
 
