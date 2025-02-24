@@ -10,8 +10,8 @@ def weather_condition_casualties(db_config:Dict[str,str]):
     weather_condition_quaries = f''' 
     select "Weather Condition", "Casualties" from `{TABLE_NAME}`;
     '''
-    result = fetch_query_results(db_config, weather_condition_quaries)
-    print (result)
+    return fetch_query_results(db_config, weather_condition_quaries)
+    
     
 def highest_casualties_weather(db_config: Dict[str, str]):
         casualties_query = f''' 
@@ -21,8 +21,8 @@ def highest_casualties_weather(db_config: Dict[str, str]):
         ORDER BY total_casualties DESC;
         '''
     
-        result = fetch_query_results(db_config, casualties_query)
-        print(result)
+        return fetch_query_results(db_config, casualties_query)
+        
     
 def accident_count_per_weather(db_config: Dict[str, str]):
         
@@ -32,8 +32,8 @@ def accident_count_per_weather(db_config: Dict[str, str]):
         GROUP BY "Weather Condition"
         ORDER BY accident_count DESC;
     '''
-        result = fetch_query_results(db_config, accident_count_query)
-        print(result)
+        return fetch_query_results(db_config, accident_count_query)
+        
     
     
 def monthly_casualties_per_weather(db_config: Dict[str, str]): 
@@ -44,8 +44,8 @@ def monthly_casualties_per_weather(db_config: Dict[str, str]):
         ORDER BY "Month", total_casualties DESC;
         '''
     
-        result = fetch_query_results(db_config, casualties_query)
-        print(result)
+        return fetch_query_results(db_config, casualties_query)
+        
     
 
 def accidents_and_casualties_by_weather(db_config: Dict[str, str]):  #accident count and total casualties for each weather condition:
@@ -61,9 +61,8 @@ def accidents_and_casualties_by_weather(db_config: Dict[str, str]):  #accident c
     '''
     
     # Execute the query
-    result = fetch_query_results(db_config, weather_impact_query)
+    return fetch_query_results(db_config, weather_impact_query)
     
-    # Print the results
-    print(result)
+    
 
     

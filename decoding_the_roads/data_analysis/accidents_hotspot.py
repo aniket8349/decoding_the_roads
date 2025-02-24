@@ -16,10 +16,10 @@ def accident_hotspots_by_weather(db_config: Dict[str, str]):
     '''
     
     # Execute the query
-    result = fetch_query_results(db_config, accident_hotspot_query)
+    return fetch_query_results(db_config, accident_hotspot_query)
     
     # Print the results
-    print(result)
+     
     
 
 
@@ -33,8 +33,8 @@ def accident_hotspots_by_month(db_config: Dict[str, str]):
     LIMIT 10;
     '''
     
-    result = fetch_query_results(db_config, accident_hotspot_query)
-    print(result)
+    return fetch_query_results(db_config, accident_hotspot_query)
+    
     
     
 if __name__ == "__main__":

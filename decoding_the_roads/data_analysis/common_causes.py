@@ -13,8 +13,8 @@ def common_accident_causes(db_config: Dict[str, str]):
     ORDER BY accident_count DESC
     LIMIT 10;
     '''
-    result = fetch_query_results(db_config, accident_causes_query)
-    print(result)
+    return fetch_query_results(db_config, accident_causes_query)
+    
 
 def accident_causes_by_casualties(db_config: Dict[str, str]):
 
@@ -26,7 +26,7 @@ def accident_causes_by_casualties(db_config: Dict[str, str]):
     LIMIT 10;
     '''
     
-    result = fetch_query_results(db_config, accident_casualties_query)
+    return fetch_query_results(db_config, accident_casualties_query)
     
     
-    print(result)
+    

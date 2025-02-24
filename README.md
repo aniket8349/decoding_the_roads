@@ -12,11 +12,7 @@ Using `venv` (recommended for Python 3):(replace .venv with your preferred name)
 python3 -m venv .venv
 ```
 
-#### **Activate the virtual environment (Windows)**
-
-```powershell
-.venv\Scripts\activate
-```
+#### **Activate the virtual environment (Windows)**.venv\Scripts\activate
 
 #### Activate the virtual environment (macOS/Linux)
 

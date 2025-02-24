@@ -16,10 +16,9 @@ ORDER BY STR_TO_DATE(Month, '%b');
     '''
     
     # Execute the query
-    result = fetch_query_results(db_config, monthly_impact_query)
+    return fetch_query_results(db_config, monthly_impact_query)
     
     # Print the results
-    print(result)
     
 
 
@@ -36,11 +35,11 @@ def yearly_accident_trends(db_config: Dict[str, str]): #in which accidents has c
     ORDER BY "Year";
     '''
     
-    result = fetch_query_results(db_config, yearly_query)
-    print(result)
+    return fetch_query_results(db_config, yearly_query)
     
     
-    from typing import Dict
+    
+    
 
 def derived_accident_severity(db_config: Dict[str, str]):
 
@@ -61,12 +60,12 @@ def derived_accident_severity(db_config: Dict[str, str]):
     '''
     
     # Execute the query
-    result = fetch_query_results(db_config, severity_query)
+    return fetch_query_results(db_config, severity_query)
     
-    # Print the results
-    print(result)
     
-    from typing import Dict
+    
+    
+    
 
 def time_based_analysis(db_config: Dict[str, str]):
 
@@ -92,8 +91,8 @@ def time_based_analysis(db_config: Dict[str, str]):
     ORDER BY accident_count DESC;
     '''
     
-    result = fetch_query_results(db_config, time_query)
-    print(result)
+    return fetch_query_results(db_config, time_query)
+    
     
     
     
@@ -110,13 +109,14 @@ def casualties_by_full_time(db_config: Dict[str, str]):
     '''
     
 
-    result = fetch_query_results(db_config, full_time_query)
+    return fetch_query_results(db_config, full_time_query)
 
-    print(result)
+    
 
     
 if __name__ == "__main__":
-    accidents_and_casualties_by_month(db_config)
+    result = accidents_and_casualties_by_month(db_config)
+    
     
     
     
