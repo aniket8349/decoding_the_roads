@@ -28,6 +28,7 @@ def insert_basic_data(db_config:Dict[str,str]):
     # execute_query(db_config, insert_data_query)
     data = fetch_query_results(db_config, insert_data_query)
     print(data)
+    
 
 def show_data(db_config:Dict[str,str]):
       
