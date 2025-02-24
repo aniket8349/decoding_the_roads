@@ -1,4 +1,5 @@
 from ..utils.sql_utils import create_new_table , execute_query , fetch_query_results
+from ..config.db_config import db_config
 from typing import Dict 
 
 
@@ -8,13 +9,10 @@ TABLE_NAME: str = "global_traffic_accidents"
 
 def accidents_and_casualties_by_month(db_config: Dict[str, str]):#accidents_and_casualties_by_month
     monthly_impact_query = f''' 
-    SELECT 
-    "Month", 
-    COUNT(*) AS accident_count, 
-    SUM("Casualties") AS total_casualties
-    FROM `{TABLE_NAME}`
-    GROUP BY "Month"
-    ORDER BY total_casualties DESC;
+    SELECT DATE_FORMAT(Date, '%b') AS Month, COUNT(*) AS Total_Accidents, SUM(Casualties) AS Total_Casualties
+FROM `{TABLE_NAME}`
+GROUP BY DATE_FORMAT(Date, '%b')
+ORDER BY STR_TO_DATE(Month, '%b');
     '''
     
     # Execute the query
@@ -24,7 +22,7 @@ def accidents_and_casualties_by_month(db_config: Dict[str, str]):#accidents_and_
     print(result)
     
 
-from typing import Dict
+
 
 def yearly_accident_trends(db_config: Dict[str, str]): #in which accidents has commites more
     
@@ -96,3 +94,29 @@ def time_based_analysis(db_config: Dict[str, str]):
     
     result = fetch_query_results(db_config, time_query)
     print(result)
+    
+    
+    
+
+def casualties_by_full_time(db_config: Dict[str, str]):
+
+    full_time_query = f''' 
+    SELECT 
+        TIME_FORMAT("Timestamp", '%H:%i:%s') AS full_time, 
+        SUM("Casualties") AS total_casualties
+    FROM `{TABLE_NAME}`
+    GROUP BY full_time
+    ORDER BY total_casualties DESC;
+    '''
+    
+
+    result = fetch_query_results(db_config, full_time_query)
+
+    print(result)
+
+    
+if __name__ == "__main__":
+    accidents_and_casualties_by_month(db_config)
+    
+    
+    
