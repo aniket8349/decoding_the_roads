@@ -5,11 +5,40 @@ from fastapi.templating import Jinja2Templates
 import plotly.express as px
 import pandas as pd
 
+
 from ..utils.sql_utils import fetch_query_results, execute_query;
 from ..config.db_config import db_config
-
+from ..utils.test_plot import line_chart
 router = APIRouter()
 templates = Jinja2Templates(directory="decoding_the_roads/templates")
+
+
+@router.get("/")
+async def read_items(request: Request):
+    try:
+        return templates.TemplateResponse("index.html", {"request": request})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/dashboard")
+async def dashboard(request: Request):
+    try:
+        # Sample data (replace with your data loading/analysis)
+        data = {'x': [1, 2, 3, 4, 5], 'y': [2, 4, 1, 5, 3]}
+
+        # Convert dictionary to DataFrame
+        # df = pd.DataFrame(data)
+        # Create Plotly Express chart
+        # fig = px.bar(df, x='x', y='y', title='Sample Plotly Chart')
+
+        # Convert the Plotly chart to HTML
+        # plotly_html = fig.to_html(include_plotlyjs="cdn")  # include_plotlyjs=False is still important
+        fig = line_chart(data=data, x='x', y='y', title='Sample Plotly Chart')
+        plotly_html  =  fig.to_html(include_plotlyjs="cdn")
+        return templates.TemplateResponse("dashboard.html", {"request": request, "plotly_html": plotly_html})
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/accident_trends")
 async def get_accident_trends():
@@ -33,7 +62,7 @@ async def get_plot_by_weather_condition():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-@router.get("/plot")
+@router.get("/app")
 async def get_plot(request: Request):
     try:
         # Sample data (replace with your data loading/analysis)
@@ -47,7 +76,7 @@ async def get_plot(request: Request):
         # Convert the Plotly chart to HTML
         plotly_html = fig.to_html(include_plotlyjs="cdn")  # include_plotlyjs=False is still important
 
-        return templates.TemplateResponse("index.html", {"request": request, "plotly_html": plotly_html})
+        return templates.TemplateResponse("dashboard.html", {"request": request, "plotly_html": plotly_html})
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
