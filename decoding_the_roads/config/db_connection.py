@@ -1,8 +1,11 @@
 import mysql.connector
 
 from mysql.connector import Error, MySQLConnection, errorcode
-
 from typing import Dict, Optional
+
+from ..utils.logger import setup_logger
+
+logger = setup_logger(__name__)  # No log_file argument, so it logs to terminal
 
 def create_connection(db_config: Dict[str, str]) -> Optional[MySQLConnection]:
     try:
@@ -13,16 +16,16 @@ def create_connection(db_config: Dict[str, str]) -> Optional[MySQLConnection]:
             database=db_config['database']
         )
         if connection.is_connected():
-            print("Successfully connected to MySQL database")
+            logger.info("Successfully connected to MySQL database")
             return connection
         else:
-            print("Failed to connect to MySQL database")
+            logger.info("Failed to connect to MySQL database")
             return None
     except Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Error: Access denied")
+            logger.error("Error: Access denied")
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print(f"Database '{db_config['database']}' does not exist")
+            logger.error(f"Database '{db_config['database']}' does not exist")
         else:
-            print(f"Error: {err}")
+            logger.error(f"Error: {err}")
         return None
