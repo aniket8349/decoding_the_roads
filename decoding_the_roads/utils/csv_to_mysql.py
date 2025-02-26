@@ -5,6 +5,9 @@ from typing import Dict, List
 from ..config.db_connection import create_connection
 from .sql_utils import execute_query , fetch_one
 from ..config.db_config import db_config
+from .logger import setup_logger
+
+logger = setup_logger(__name__)  
 
 def insert_data(cursor: MySQLCursor,table_name: str, column_names: list, df: pd.DataFrame) -> None:
     """
@@ -31,7 +34,7 @@ def csv_to_mysql(db_config:Dict[str, str], csv_file: str, table_name: str, colum
         
         if connection.is_connected():
 
-            print("Connected to MySQL database")
+            logger.info("Connected to MySQL database")
             cursor: MySQLCursor = connection.cursor()
          
             execute_query(db_config,f"CREATE TABLE IF NOT EXISTS `{table_name}` ({', '.join([f'`{col}` TEXT' for col in column_names])})")
@@ -40,26 +43,26 @@ def csv_to_mysql(db_config:Dict[str, str], csv_file: str, table_name: str, colum
             result = fetch_one(db_config,f"SELECT COUNT(*) FROM `{table_name}`")
 
             if result[0] > 0: # If data is already present in the table
-                print(f"Data already present in {table_name} table. Skipping insertion.")
+                logger.info(f"Data already present in {table_name} table. Skipping insertion.")
            
             else:
                 # * If data is not present in the table
                 # * Truncate the table
                 cursor.execute(f"TRUNCATE TABLE `{table_name}`")
-                print("Table truncated.")
+                logger.info("Table truncated.")
                 # Insert data into the table
                 insert_data(cursor, table_name, column_names, df)
-                print(f"Data from {csv_file} inserted into {table_name} table successfully.")
+                logger.info(f"Data from {csv_file} inserted into {table_name} table successfully.")
                 connection.commit()
             cursor.close()
             connection.close()
-            print("MySQL connection is closed")
+            logger.info("MySQL connection is closed")
     except FileNotFoundError as e:
-        print(f"Error: {e}")
+        logger.error(f"Error: {e}")
     except Error as e:
-        print(f"Error: {e}")
+        logger.error(f"Error: {e}")
     finally:
         if connection.is_connected():
             cursor.close()
             connection.close()
-            print("MySQL connection is closed")
+            logger.info("MySQL connection is closed")
