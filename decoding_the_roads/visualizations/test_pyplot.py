@@ -13,6 +13,27 @@ def bar_chart(data , x: str , y: str, title: str, )-> Figure:
     fig: Figure = px.bar(df, x=x, y=y, title=title)
     return fig
 
+def scatter_plot(data, x: str, y: str, title: str) -> Figure:
+    df = DataFrame(data)
+    fig = px.scatter(df, x=x, y=y, title=title, color=y, size=y)
+    return fig
+
+def pie_chart(data, names: str, values: str, title: str) -> Figure:
+    df = DataFrame(data)
+    fig = px.pie(df, names=names, values=values, title=title, hole=0.3)
+    return fig
+
+def bubble_chart(data, x: str, y: str, size: str, title: str) -> Figure:
+    df = DataFrame(data)
+    fig = px.scatter(df, x=x, y=y, size=size, color=size, title=title)
+    return fig
+
+def categorical_axes_chart(data, x: str, y: str, category: str, title: str) -> Figure:
+    df = DataFrame(data)
+    fig = px.bar(df, x=x, y=y, color=category, title=title, barmode="group")
+    return fig
+
+
 
 
 if __name__ == "__main__":
