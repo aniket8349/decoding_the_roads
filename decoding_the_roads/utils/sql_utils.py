@@ -5,6 +5,10 @@ from typing import Dict
 
 from ..config.db_connection import create_connection
 
+from ..utils.logger import setup_logger
+
+logger = setup_logger(__name__)  
+
 def execute_query(db_config: Dict[str, str], query: str , query_data = None):
     connection: MySQLConnection = create_connection(db_config)
     if connection:
@@ -16,9 +20,9 @@ def execute_query(db_config: Dict[str, str], query: str , query_data = None):
                 cursor.execute(query, query_data)
 
             connection.commit()
-            print("Query executed successfully")
+            logger.info("Query executed successfully")
         except Error as err:
-            print(f"Error: '{err}'")
+            logger.error(f"Error: '{err}'")
         finally:
             cursor.close()
             connection.close()
@@ -32,7 +36,7 @@ def fetch_query_results(db_config: Dict[str, str], query: str ):
             result = cursor.fetchall()
             return result
         except Error as err:
-            print(f"Error: '{err}'")
+            logger.error(f"Error: '{err}'")
             return None
         finally:
             cursor.close()
@@ -47,11 +51,12 @@ def fetch_one(db_config: Dict[str, str], query: str ):
             result = cursor.fetchone()
             return result
         except Error as err:
-            print(f"Error: '{err}'")
+            logger.error(f"Error: '{err}'")
             return None
         finally:
             cursor.close()
             connection.close()
+            
 def create_new_table(db_config: Dict[str, str], new_table_query: str ):
     execute_query(db_config, new_table_query)
 

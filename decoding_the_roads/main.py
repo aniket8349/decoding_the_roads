@@ -22,9 +22,7 @@ kaggle_api.authenticate()
 app.add_event_handler("startup", startup_event)
 app.add_event_handler("shutdown", shutdown_event)
 
-@app.get("/")
-async def read_items():
-    return "Hello world"
+
 
 def main():
     import uvicorn

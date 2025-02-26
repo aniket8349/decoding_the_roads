@@ -6,11 +6,13 @@ from ..utils.get_column_names import get_column_names
 from ..config.download_data import download_data
 from ..constant.constant import TABLE_NAME, DATA_DIR
 
+from ..utils.logger import setup_logger
 
+logger = setup_logger(__name__)  
 
 async def startup_event():
 
-    print("Starting up...")
+    logger.info("Starting up...")
 
     try:
 
@@ -25,9 +27,9 @@ async def startup_event():
         else:
             raise RuntimeError("Failed to get column names from CSV file.")
 
-        print("Startup complete.")
+        logger.info("Startup complete.")
 
     except Exception as e:  # Catch potential startup errors
-        print(f"Startup error: {e}")
-        raise  # Re-raise the exception to prevent the app from starting
+        logger.error(f"Startup error: {e}")
+        raise RuntimeError("Startup error")  # Raise an exception to stop the app
 
