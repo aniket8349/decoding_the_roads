@@ -115,7 +115,7 @@ def casualties_by_full_time(db_config: Dict[str, str]):
 
     
 if __name__ == "__main__":
-    result = accidents_and_casualties_by_month(db_config)
+    result = casualties_by_full_time(db_config)
     
     
     
