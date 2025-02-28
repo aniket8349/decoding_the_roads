@@ -10,6 +10,7 @@ from ..visualizations.test_pyplot import line_chart
 from ..utils.sql_utils import fetch_query_results, execute_query;
 from ..config.db_config import db_config
 #from ..utils.test_plot import line_chart
+
 router = APIRouter()
 templates = Jinja2Templates(directory="decoding_the_roads/templates")
 
