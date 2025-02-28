@@ -31,7 +31,7 @@ def insert_basic_data(db_config:Dict[str,str]):
     
 
 def show_data(db_config:Dict[str,str]):
-      
+
     data = insert_basic_data(db_config)
     print(data)
 

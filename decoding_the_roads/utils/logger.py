@@ -22,4 +22,3 @@ if __name__ == '__main__':
     logger.info("This is a test info message")
     logger.warning("This is a test warning message")
     logger.error("This is a test error message")
- 
