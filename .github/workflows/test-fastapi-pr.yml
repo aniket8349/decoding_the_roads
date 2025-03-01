@@ -16,6 +16,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
+          
+      - name: Create Virtual Environment
+        run: |
+          python -m venv .venv
+          ls -la .venv  # Debugging: Check if .venv is created
 
       - name: Set up Kaggle API Key
         run: |
@@ -28,7 +33,7 @@ jobs:
         run: |
           source .venv/bin/activate
           kaggle datasets list || (echo "❌ Kaggle API authentication failed!" && exit 1)
-          
+
       - name: Install Dependencies
         run: |
           python -m venv .venv
