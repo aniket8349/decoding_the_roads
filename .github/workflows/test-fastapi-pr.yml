@@ -17,18 +17,26 @@ jobs:
         with:
           python-version: "3.9"
 
+      - name: Set up Kaggle API Key
+        run: |
+          mkdir -p /home/runner/.kaggle
+          echo "${{ secrets.KAGGLE_JSON }}" > /home/runner/.kaggle/kaggle.json
+          chmod 600 /home/runner/.kaggle/kaggle.json
+
       - name: Install Dependencies
         run: |
           python -m venv .venv
           source .venv/bin/activate
           pip install --upgrade pip
+          
+          # Retry installation up to 3 times in case of network failures
           for i in {1..3}; do pip install -r requirements.txt && break || sleep 10; done
           for i in {1..3}; do pip install -r dev-requirements.txt && break || sleep 10; done
 
       - name: Run Tests
         run: |
           source .venv/bin/activate
-          pytest --cov=app tests/test_main.py
+          pytest --cov=app tests/
 
       - name: Start FastAPI Server with Uvicorn (Test Mode)
         run: |
@@ -38,7 +46,7 @@ jobs:
 
       - name: Check FastAPI Response
         run: |
-          curl -f http://127.0.0.1:8000 || (echo "❌ FastAPI Server did not start!" && exit 1)
+          curl --fail http://127.0.0.1:8000 || (echo "❌ FastAPI Server did not start!" && exit 1)
 
       - name: Check Jinja2 Template Rendering
         run: |
