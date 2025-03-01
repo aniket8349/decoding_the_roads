@@ -29,9 +29,13 @@ jobs:
       - name: Set up Kaggle API Key
         run: |
           mkdir -p /home/runner/.kaggle
-          echo "${{ secrets.KAGGLE_JSON }}" > /home/runner/.kaggle/kaggle.json
+          printf '%s' "${{ secrets.KAGGLE_JSON }}" > /tmp/kaggle.json.tmp
+          mv /tmp/kaggle.json.tmp /home/runner/.kaggle/kaggle.json
           chmod 600 /home/runner/.kaggle/kaggle.json
-          echo "✅ Kaggle API Key Set"
+          echo "--- File Contents (Text) ---"
+          cat /home/runner/.kaggle/kaggle.json
+          echo "--- File Contents (Hex) ---"
+          hexdump -C /home/runner/.kaggle/kaggle.json
 
       - name: Verify Kaggle API Setup
         run: |
