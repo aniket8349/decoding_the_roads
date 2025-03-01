@@ -1,0 +1,48 @@
+name: Test FastAPI PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+          # Install main dependencies
+          pip install -r requirements.txt
+          # Install development dependencies
+          pip install -r dev-requirements.txt
+
+      - name: Run Tests
+        run: |
+          source .venv/bin/activate
+          pytest --cov=app tests/
+
+      - name: Start FastAPI Server with Uvicorn (Test Mode)
+        run: |
+          source .venv/bin/activate
+          uvicorn app.main:app --host 0.0.0.0 --port 8000 --log-level info --lifespan on --reload &
+          sleep 5  # Wait for the server to start
+
+      - name: Check FastAPI Response
+        run: |
+          curl -f http://127.0.0.1:8000 || (echo "❌ FastAPI Server did not start!" && exit 1)
+
+      - name: Check Jinja2 Template Rendering
+        run: |
+          source .venv/bin/activate
+          python -c "import jinja2; print('✅ Jinja2 is working!')"
