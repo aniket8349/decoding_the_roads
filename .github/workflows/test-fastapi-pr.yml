@@ -22,7 +22,13 @@ jobs:
           mkdir -p /home/runner/.kaggle
           echo "${{ secrets.KAGGLE_JSON }}" > /home/runner/.kaggle/kaggle.json
           chmod 600 /home/runner/.kaggle/kaggle.json
+          echo "✅ Kaggle API Key Set"
 
+      - name: Verify Kaggle API Setup
+        run: |
+          source .venv/bin/activate
+          kaggle datasets list || (echo "❌ Kaggle API authentication failed!" && exit 1)
+          
       - name: Install Dependencies
         run: |
           python -m venv .venv
