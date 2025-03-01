@@ -1,0 +1,73 @@
+{% extends "pages/dashboard.html" %}
+{% block content %}
+{% include 'components/scripts.html' %}
+
+<div class="flex items-center justify-center h-12 mb-4 mt-4 rounded-sm bg-gray-50 dark:bg-gray-800">
+
+</div>
+<div class="grid grid-cols-3  gap-4 ">
+    <div class="flex items-center justify-center col-span-2 h-3/4 rounded-sm bg-gray-50 dark:bg-gray-800">
+        {{ plotly_html | safe }}
+    </div>
+    <!--  -->
+    <div class="flex items-center justify-center col-start-3 h-96 rounded-sm bg-gray-50 dark:bg-gray-800">
+
+        <div
+            class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Global accident
+                </h5>
+
+            </div>
+            <div class="flow-root">
+                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                    <li class="py-3 sm:py-4">
+                        <div class="flex items-center">
+
+                            <div class="flex-1 min-w-0 ms-4">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                    weather condition
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
+                                    <div class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style="width: 45%">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                454
+                            </div>
+                        </div>
+                    </li>
+                    {% for item in data %}
+                    <li class="py-3 sm:py-4">
+                        <div class="flex items-center">
+                            <div class="flex-1 min-w-0 ms-4">
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                    {{ item.name }}
+                                </p>
+                                <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
+                                    <!-- style="width: {{
+                                            item.percentage }}" -->
+                                    <div class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style="width: 45%">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                {{ item.value }}
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}

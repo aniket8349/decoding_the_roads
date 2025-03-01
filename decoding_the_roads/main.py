@@ -3,7 +3,7 @@ from typing import List, Optional
 from kaggle.api.kaggle_api_extended import KaggleApi
 from fastapi import FastAPI, HTTPException 
 from fastapi.staticfiles import StaticFiles
-from .routers import sql_router
+from .routers import sql_router , pages_router
 
 from .services.startup_event import startup_event 
 from .services.shutdown_event import shutdown_event
@@ -14,6 +14,7 @@ load_dotenv() # loading env
 
 app = FastAPI()
 app.include_router(sql_router.router)
+app.include_router(pages_router.router)
 app.mount("/static", StaticFiles(directory="decoding_the_roads/static"), name="static")
 
 kaggle_api = KaggleApi()
