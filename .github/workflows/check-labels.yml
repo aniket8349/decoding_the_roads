@@ -1,0 +1,37 @@
+name: Check PR and Issue Labels
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  issues:
+    types: [opened, edited, reopened]
+
+jobs:
+  check-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR or Issue Labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get PR or Issue Number
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            NUMBER=${{ github.event.pull_request.number }}
+            TYPE="Pull Request"
+          else
+            NUMBER=${{ github.event.issue.number }}
+            TYPE="Issue"
+          fi
+
+          # Get Labels Count
+          LABEL_COUNT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/$NUMBER" | jq '.labels | length')
+
+          # Check if Labels Exist
+          if [ "$LABEL_COUNT" -eq 0 ]; then
+            echo "❌ $TYPE #$NUMBER does not have any labels. Please add at least one label."
+            exit 1
+          else
+            echo "✅ $TYPE #$NUMBER has labels. Proceeding..."
+          fi
