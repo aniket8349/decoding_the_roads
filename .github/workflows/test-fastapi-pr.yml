@@ -36,7 +36,12 @@ jobs:
       - name: Verify Kaggle API Setup
         run: |
           source .venv/bin/activate
-          python -c "import json; with open('/home/runner/.kaggle/kaggle.json', 'r') as f: data = json.load(f); print(data)"
+          python -c "
+          import json
+          with open('/home/runner/.kaggle/kaggle.json', 'r') as f:
+          data = json.load(f)
+          print(data)
+          "
           kaggle datasets list || (echo "❌ Kaggle API authentication failed!" && exit 1)
 
       - name: Run Tests
