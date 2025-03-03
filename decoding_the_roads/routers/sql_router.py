@@ -7,24 +7,39 @@ import plotly.express as px
 import pandas as pd
 
 
-from ..visualizations.test_pyplot import line_chart
+from ..visualizations.graph_pyplot import line_chart
 from ..utils.sql_utils import fetch_query_results, execute_query;
 from ..config.db_config import db_config
 #from ..utils.test_plot import line_chart
+from ..utils.logger import setup_logger
 
+logger = setup_logger(__name__)  
 router = APIRouter()
 templates = Jinja2Templates(directory="decoding_the_roads/templates")
-
-
 
 @router.get("/accident_trends")
 async def get_accident_trends():
     try:
+        # query = "CREATE TABLE test_accident_data as SELECT * FROM accident_data LIMIT 4;"
         query = "SELECT * FROM accident_data LIMIT 4;"
         query_result = fetch_query_results(db_config, query)
 
         # convert the query result to a json object
-        return json.dumps(query_result)
+        columns = ["id", "country", "accidents", "year"]
+        # rows = json.loads(query_result)
+        # data = [dict(zip(columns, row)) for row in rows]
+        result_dict = {"x": [], "y": []}
+
+        for row in query_result:
+            result_dict["x"].append(row[1])
+            result_dict["y"].append(row[2])
+
+        try:
+            logger.info(result_dict)
+        except:
+            logger.error("Error in logging")
+        return { "query_result" : result_dict } # Convert data to JSON string
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

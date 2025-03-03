@@ -1,0 +1,12 @@
+{
+    "chart_card1": {
+        "chart_title": "Chart 1 Title",
+        "chart_data": "Content for Chart 1",
+        "chart1_html": "<p>Chart 1 HTML goes here</p>"
+    },
+    "chart_card2": {
+        "chart_title": "Chart 2 Title",
+        "chart_data": "Content for Chart 2",
+        "chart2_html": "<p>Chart 2 HTML goes here</p>"
+    }
+}

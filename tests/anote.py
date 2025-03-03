@@ -1,14 +1,23 @@
-from typing import List, Set
 import json
-# Define a list with type annotation
-my_list: List[Set[int]] = []
 
-# Add a set to the list
-# my_set: Set[int] = {1, 2, 3}
-# my_list.append(my_set)
 
-# tuple inside list 
-my_tuple = (4, 5, 6)
-my_list.append((4, 5, 6))
-# Print the list
-print(json.dumps(my_list))
+
+def test_fetch_query_results():
+
+    query_result = [
+        [1,"usa",222,2022],
+        [1,"usa",222,2022],
+        [1,"usa",222,2022]
+        ]
+
+    # convert the query result to a json object
+    columns = ["id", "country", "accidents", "year"]
+    rows = json.dumps(query_result)
+    data = [dict(zip(columns, row)) for row in rows]
+
+    return data
+
+
+
+if __name__ == "__main__":
+    test_fetch_query_results()

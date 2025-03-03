@@ -1,7 +1,7 @@
 from ..utils.sql_utils import create_new_table , execute_query , fetch_query_results
 from typing import Dict 
 
-
+from ..config.db_config import db_config
 
 # quiries for selecting weather condition and casualties 
 TABLE_NAME: str = "global_traffic_accidents"
@@ -65,4 +65,13 @@ def accidents_and_casualties_by_weather(db_config: Dict[str, str]):  #accident c
     
     
 
+def fetch_all_weather_conditions(db_config: Dict[str, str]):
+    # result = [accidents_and_casualties_by_weather(db_config),accident_count_per_weather(db_config),highest_casualties_weather(db_config),monthly_casualties_per_weather(db_config)]
+    result = accidents_and_casualties_by_weather(db_config)
+    return result
+
+
+
+if __name__ == "__main__":
+    print(fetch_all_weather_conditions(db_config))
     
