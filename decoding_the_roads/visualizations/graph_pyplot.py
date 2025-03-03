@@ -7,6 +7,17 @@ logger = setup_logger(__name__)
 
 # Line Chart
 def line_chart(data, x: str, y: str, title: str) -> Figure:
+    """ 
+    Function to create a line chart
+    args: 
+        data: Dict
+        x: str
+        y: str
+        title
+    returns:
+        fig: Figure
+
+    """
     try:
         df: DataFrame = DataFrame(data)
         if x not in df.columns or y not in df.columns:
@@ -18,6 +29,17 @@ def line_chart(data, x: str, y: str, title: str) -> Figure:
 
 # Bar Chart
 def bar_chart(data, x: str, y: str, title: str) -> Figure:
+    """ 
+    Function to create a bar chart
+    args:
+        data: Dict
+        x: str
+        y: str
+        title: str
+
+    returns:
+        fig: Figure 
+    """
     try:
         df: DataFrame = DataFrame(data)
         if x not in df.columns or y not in df.columns:
@@ -29,6 +51,17 @@ def bar_chart(data, x: str, y: str, title: str) -> Figure:
 
 # Scatter Plot
 def scatter_plot(data, x: str, y: str, title: str) -> Figure:
+    """ 
+    Function to create a scatter plot
+    args:
+        data: Dict
+        x: str
+        y: str
+        title: str
+
+    returns:
+        fig: Figure 
+    """
     try:
         df: DataFrame = DataFrame(data)
         if x not in df.columns or y not in df.columns:
@@ -40,6 +73,17 @@ def scatter_plot(data, x: str, y: str, title: str) -> Figure:
 
 # Pie Chart
 def pie_chart(data, names: str, values: str, title: str) -> Figure:
+    """ 
+    Function to create a pie chart
+    args:
+        data: Dict
+        x: str
+        y: str
+        title: str
+
+    returns:
+        fig: Figure 
+    """
     try:
         df: DataFrame = DataFrame(data)
         if names not in df.columns or values not in df.columns:
@@ -51,6 +95,17 @@ def pie_chart(data, names: str, values: str, title: str) -> Figure:
 
 # Bubble Chart
 def bubble_chart(data, x: str, y: str, size: str, title: str) -> Figure:
+    """ 
+    Function to create a bubble chart
+    args:
+        data: Dict
+        x: str
+        y: str
+        title: str
+
+    returns:
+        fig: Figure 
+    """
     try:
         df: DataFrame = DataFrame(data)
         if x not in df.columns or y not in df.columns or size not in df.columns:
@@ -62,6 +117,17 @@ def bubble_chart(data, x: str, y: str, size: str, title: str) -> Figure:
 
 # Categorical Axes Chart
 def categorical_axes_chart(data, x: str, y: str, category: str, title: str) -> Figure:
+    """ 
+    Function to create a categorical axes chart
+    args:
+        data: Dict
+        x: str
+        y: str
+        category: str
+        title: str
+    returns:
+        fig: Figure 
+    """
     try:
         df: DataFrame = DataFrame(data)
         if x not in df.columns or y not in df.columns or category not in df.columns:

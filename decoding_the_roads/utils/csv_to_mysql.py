@@ -11,7 +11,8 @@ logger = setup_logger(__name__)
 
 def insert_data(cursor: MySQLCursor,table_name: str, column_names: list, df: pd.DataFrame) -> None:
     """
-    #### Args:
+    function to insert data into a MySQL table
+    args:
         param cursor: MySQLCursor object 
         param table_name: str 
         param column_names: List[str] 
@@ -25,7 +26,15 @@ def insert_data(cursor: MySQLCursor,table_name: str, column_names: list, df: pd.
 
 
 def csv_to_mysql(db_config:Dict[str, str], csv_file: str, table_name: str, column_names:List[str])-> None:
-
+    """ 
+    Function to read a CSV file and insert its data into a MySQL table
+    args:
+        db_config: Dict[str, str]
+        csv_file: str
+        table_name: str
+        column_names: List[str]
+    return: None 
+    """
     try:
         # Read CSV file into DataFrame
         df = pd.read_csv(csv_file)
