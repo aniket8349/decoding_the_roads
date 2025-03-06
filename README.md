@@ -99,12 +99,7 @@ MYSQL_DATABASE=
 
 # Usage
 
-1. Ensure your virtual environment is activated.
-2. Run your Python script:
-
-   ```sh
-   python -m decoding_the_roads.main
-   ```
+Ensure your virtual environment is activated.
 
 fastapi dev main.py
 
