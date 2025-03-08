@@ -1,14 +1,11 @@
-import os
 from dotenv import load_dotenv
-from typing import List, Optional
-from kaggle.api.kaggle_api_extended import KaggleApi
+# from kaggle.api.kaggle_api_extended import KaggleApi
 from fastapi import FastAPI, HTTPException 
 from fastapi.staticfiles import StaticFiles
 from .routers import sql_router , pages_router
-
 from .services.startup_event import startup_event 
 from .services.shutdown_event import shutdown_event
-from .config.kaggle_auth import authenticate_kaggle
+# from .config.kaggle_auth import authenticate_kaggle
 
 load_dotenv() # loading env
 
@@ -25,10 +22,9 @@ app.add_event_handler("startup", startup_event)
 app.add_event_handler("shutdown", shutdown_event)
 
 
-
 def main():
     import uvicorn
-    uvicorn.run(app="app.main:app", host="0.0.0.0", port=8000, reload=True)  # Important: app="app.main:app"
+    uvicorn.run(app="app.main:app", host="127.0.0.1", port=8000, reload=True)  # Important: app="app.main:app"
 
 
 if __name__ == "__main__":
