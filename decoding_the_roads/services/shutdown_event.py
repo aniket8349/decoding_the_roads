@@ -1,8 +1,9 @@
+from ..utils.logger import setup_logger
+
+logger = setup_logger(__name__)  
 
 async def shutdown_event():
-    kaggle_api = None
-    print("Shutting down...")
 
-    if kaggle_api:
-        pass  
-    print("Shutdown complete.")
+    logger.info("Shutting down...")
+
+    logger.info("Shutdown complete.")

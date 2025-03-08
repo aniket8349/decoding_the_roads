@@ -1,0 +1,95 @@
+<aside id="sidebar-multi-level-sidebar"
+    class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+    aria-label="Sidebar">
+
+    <div class="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <a href="#" class="flex items-center ps-2.5 mb-5">
+            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Decode_</span>
+        </a>
+        <!--  -->
+
+        <!--  -->
+        <ul class="space-y-2 font-medium">
+            <li>
+                <a href="/dashboard-index"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="ms-3">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <button type="button"
+                    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                    aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path fill-rule="evenodd"
+                            d="M5.617 2.076a1 1 0 0 1 1.09.217L8 3.586l1.293-1.293a1 1 0 0 1 1.414 0L12 3.586l1.293-1.293a1 1 0 0 1 1.414 0L16 3.586l1.293-1.293A1 1 0 0 1 19 3v18a1 1 0 0 1-1.707.707L16 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L12 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L8 20.414l-1.293 1.293A1 1 0 0 1 5 21V3a1 1 0 0 1 .617-.924ZM9 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
+                            clip-rule="evenodd" />
+                    </svg>
+
+
+                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Analysis</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                    <li>
+
+
+                        <a href="/analysis/diagnostic"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            {% include 'components/svg.html' %}
+                            Diagnostic
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/analysis/prescriptive"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            {% include 'components/svg.html' %}
+                            
+                            Prescriptive
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/analysis/predictive"
+                            class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            {% include 'components/svg.html' %}
+                            
+                            Predictive</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="/chart"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Chart</span>
+                    <span
+                        class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
+                </a>
+            </li>
+
+            <!--  -->
+            <!-- <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
+                </a>
+            </li>
+            <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <i class="fas fa-user-plus"></i>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
+                </a>
+            </li>
+            <button id="theme-toggle" type="button"
+                class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                <i class="fas fa-adjust"></i> Dark mode
+            </button> -->
+        </ul>
+    </div>
+</aside>

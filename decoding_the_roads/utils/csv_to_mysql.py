@@ -11,7 +11,8 @@ logger = setup_logger(__name__)
 
 def insert_data(cursor: MySQLCursor,table_name: str, column_names: list, df: pd.DataFrame) -> None:
     """
-    #### Args:
+    function to insert data into a MySQL table
+    args:
         param cursor: MySQLCursor object 
         param table_name: str 
         param column_names: List[str] 
@@ -19,19 +20,64 @@ def insert_data(cursor: MySQLCursor,table_name: str, column_names: list, df: pd.
 
     return: None
     """
-    for i, row in df.iterrows():
-        sql = f"INSERT INTO `{table_name}` ({', '.join([f'`{col}`' for col in column_names])}) VALUES ({', '.join(['%s'] * len(row))})"
-        cursor.execute(sql, tuple(row)) # Convert the Series to a tuple
+    columns = ', '.join([f'`{col}`' for col in column_names])
+    values_placeholder = ', '.join(['%s'] * len(column_names))
+    sql = f"INSERT INTO `{table_name}` ({columns}) VALUES ({values_placeholder})"
+
+    # Convert DataFrame rows to list of tuples
+    data = [tuple(row) for row in df.itertuples(index=False, name=None)]
+
+    # Execute the query with multiple rows
+    cursor.executemany(sql, data) # Convert the Series to a tuple
 
 
-def csv_to_mysql(db_config:Dict[str, str], csv_file: str, table_name: str, column_names:List[str])-> None:
 
+def csv_to_mysql(db_config: Dict[str, str], csv_file: str, table_name: str, column_names: List[str]) -> None:
+    """
+    Function to read a CSV file and insert its data into a MySQL table
+    args:
+        db_config: Dict[str, str]
+        csv_file: str
+        table_name: str
+        column_names: List[str]
+    return: None 
+    """
+    connection: MySQLConnection = create_connection(db_config)
+    
+    if connection is None:
+        logger.error("Failed to create MySQL connection")
+        return
+    
+    try:
+        # Read CSV file into DataFrame
+        df = pd.read_csv(csv_file)
+        
+        if connection.is_connected():
+            logger.info("Connected to MySQL database")
+            # Your code to insert data into MySQL table goes here
+        else:
+            logger.error("MySQL connection is not active")
+    except Exception as e:
+        logger.error(f"Error occurred: {e}")
+    finally:
+        if connection and connection.is_connected():
+            connection.close()
+            logger.info("MySQL connection closed")
+    """ 
+    Function to read a CSV file and insert its data into a MySQL table
+    args:
+        db_config: Dict[str, str]
+        csv_file: str
+        table_name: str
+        column_names: List[str]
+    return: None 
+    """
     try:
         # Read CSV file into DataFrame
         df = pd.read_csv(csv_file)
         # Create MySQL connection
-        connection: MySQLConnection = create_connection(db_config)
         
+        connection: MySQLConnection = create_connection(db_config)  
         if connection.is_connected():
 
             logger.info("Connected to MySQL database")
