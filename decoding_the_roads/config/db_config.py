@@ -17,4 +17,4 @@ prod = {
 }
 
 
-db_config = prod
+db_config = local

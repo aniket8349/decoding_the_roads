@@ -62,13 +62,13 @@ async def reports(request: Request):
 @router.get("/chart", response_class=HTMLResponse)
 def reports(request: Request):
     try:
-        query = "SELECT * FROM accident_data LIMIT 4;"
+        query = "SELECT Location , Casualties FROM global_traffic_accidents LIMIT 4;"
         query_result = fetch_query_results(db_config, query)
         logger.info(query_result)
         # {"query_result":{"x":["USA","Canada","Mexico","USA"],"y":[1000,500,300,1000]}}
-        data = sqlquery_to_json(query_result=query_result, x="country", y="accidents", row1_num=1, row2_num=2)
-        logger.info(data)
-        fig = bar_chart(data=data, x='country', y='accidents', title='Sample Plotly Chart')
+        # data = sqlquery_to_json(query_result=query_result, x="location", y="casualties", row1_num=1, row2_num=2)
+        # logger.info(data)
+        fig = bar_chart(data=query_result, x='location', y='casualties', title='Sample Plotly Chart')
         plotly_html  =  fig.to_html(include_plotlyjs="cdn")
         
         json_data = read_json_file(file_path)
