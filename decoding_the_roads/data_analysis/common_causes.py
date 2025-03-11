@@ -26,7 +26,7 @@ if __name__ == "__main__":
     result = common_accident_causes(db_config)
     print(result)
 
-<<<<<<< HEAD
+
 def accident_causes_by_casualties(db_config: Dict[str, str]):
 
     accident_casualties_query = f''' 
@@ -44,5 +44,3 @@ def fetch_all_common_causes(db_config: Dict[str, str]):
     
 if __name__ == "__main__":
     print(fetch_all_common_causes(db_config))  
-=======
->>>>>>> origin/bug-analysis-system

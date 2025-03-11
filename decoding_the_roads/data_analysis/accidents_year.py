@@ -69,13 +69,9 @@ ORDER BY Total_Casualties DESC;
     # Execute the query
     return fetch_query_results(db_config, severity_query)
     
-<<<<<<< HEAD
+
 
 def time_based_analysis(db_config: Dict[str, str]):
-=======
-def time_based_analysis(db_config: Dict[str, str]): #to done
->>>>>>> origin/bug-analysis-system
-
     time_query = f''' 
     SELECT 
     HOUR(`Time`) AS `Hour_of_Day`,
@@ -111,7 +107,6 @@ ORDER BY `Full_Timestamp`;
 
     return fetch_query_results(db_config, full_time_query)
 
-<<<<<<< HEAD
 
 def fetch_all_accident_year(db_config: Dict[str, str]):
     return [ yearly_accident_trends(db_config), derived_accident_severity(db_config), time_based_analysis(db_config), casualties_by_full_time(db_config)]    
@@ -122,12 +117,4 @@ if __name__ == "__main__":
     print(accidents_and_casualties_by_month(db_config))
     print("------------")
     print(fetch_all_accident_year(db_config))
-=======
-    
-if __name__ == "__main__":
-    result = casualties_by_full_time(db_config)
-    print(result)
->>>>>>> origin/bug-analysis-system
-    
-    
-    
+
