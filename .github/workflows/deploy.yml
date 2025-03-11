@@ -6,12 +6,26 @@ on:
       - main  # Run only on the main branch
   pull_request:
     branches:
-      - main
+      - main  # Run tests on PRs to main
 
 jobs:
   test-api:
     name: Test API Endpoints
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=5s --health-retries=3
+    env:
+      DATABASE_URL: ${{ secrets.MYSQL_DATABASE_URL }}  # Use in tests
+      
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -24,20 +38,23 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-            
-      - name: Install test Dependencies
+          
+      - name: Install Test Dependencies
         run: |
-            pip install -r dev-requirements.txt
+          pip install -r dev-requirements.txt
           
       - name: Run API Tests
         run: |
-          pytest tests/  # Run your API test cases
+          pytest tests/  # Run API test cases
 
   deploy:
     name: Build & Deploy to Cloud Run
     if: github.ref == 'refs/heads/main'  # Runs only on main branch
     needs: test-api  # Only run if tests pass
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.MYSQL_DATABASE_URL }}  # Use in deployment
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -64,7 +81,8 @@ jobs:
             --image gcr.io/decoding-the-roads/decoding-the-roads:${{ github.sha }} \
             --platform managed \
             --region asia-south1 \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --set-env-vars DATABASE_URL=${{ secrets.MYSQL_DATABASE_URL }}
 
   cleanup-old-images:
     name: Delete Old Docker Images
