@@ -21,8 +21,10 @@ async def startup_event():
 
         # check if database does not exist
         check_databases = fetch_one(db_config, f"SHOW DATABASES LIKE '{db_config['database']}'")
-        if not check_databases:
-            
+     
+        if check_databases:
+            logger.info("Startup complete.")
+        else:
             download_data(dataset_slug, DATA_DIR)  # Pass kaggle_api to download function
 
             column_list = get_column_names(csv_file)
@@ -30,6 +32,7 @@ async def startup_event():
                 csv_to_mysql(db_config, csv_file, TABLE_NAME, column_list)
             else:
                 raise RuntimeError("Failed to get column names from CSV file.")
+            
 
         logger.info("Startup complete.")
 
