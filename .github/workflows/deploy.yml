@@ -1,0 +1,81 @@
+name: API Test & Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main  # Run only on the main branch
+
+jobs:
+  test-api:
+    name: Test API Endpoints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+            
+      - name: Install test Dependencies
+        run: |
+            pip install -r dev-requirements.txt
+          
+      - name: Run API Tests
+        run: |
+          pytest tests/  # Run your API test cases
+
+  deploy:
+    name: Build & Deploy to Cloud Run
+    needs: test-api  # Only run if tests pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Docker for GCP
+        run: gcloud auth configure-docker gcr.io
+
+      - name: Build Docker Image
+        run: |
+          docker build -t gcr.io/decoding-the-roads/decoding-the-roads:${{ github.sha }} .
+
+      - name: Push Docker Image to GCR
+        run: |
+          docker push gcr.io/decoding-the-roads/decoding-the-roads:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy decoding-the-roads \
+            --image gcr.io/decoding-the-roads/decoding-the-roads:${{ github.sha }} \
+            --platform managed \
+            --region asia-south1 \
+            --allow-unauthenticated
+
+  cleanup-old-images:
+    name: Delete Old Docker Images
+    needs: deploy  # Only run after deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Delete Old Docker Images
+        run: |
+          # Keep the latest 3 images and delete older ones
+          gcloud container images list-tags gcr.io/decoding-the-roads/decoding-the-roads \
+            --sort-by=~TIMESTAMP --limit=3 --format="get(digest)" | while read digest; do
+              gcloud container images delete gcr.io/decoding-the-roads/decoding-the-roads@$digest --force-delete-tags --quiet
+            done
