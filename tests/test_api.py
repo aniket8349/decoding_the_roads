@@ -9,7 +9,7 @@ def test_root():
 
 
 def test_dashboard():
-    response = client.get("/dashboard-index.html")
+    response = client.get("/dashboard-index")
     assert response.status_code == 200
 
 def test_chart():
