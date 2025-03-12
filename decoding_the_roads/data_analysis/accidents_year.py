@@ -107,14 +107,5 @@ ORDER BY `Full_Timestamp`;
 
     return fetch_query_results(db_config, full_time_query)
 
-
-def fetch_all_accident_year(db_config: Dict[str, str]):
-    return [ yearly_accident_trends(db_config), derived_accident_severity(db_config), time_based_analysis(db_config), casualties_by_full_time(db_config)]    
-
     
-if __name__ == "__main__":
-    # result = casualties_by_full_time(db_config)
-    print(accidents_and_casualties_by_month(db_config))
-    print("------------")
-    print(fetch_all_accident_year(db_config))
 

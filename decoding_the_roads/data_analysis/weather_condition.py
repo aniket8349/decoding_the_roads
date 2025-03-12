@@ -1,7 +1,9 @@
 from ..utils.sql_utils import create_new_table , execute_query , fetch_query_results
 
+
 from ..config.db_config import db_config
 from typing import Dict 
+
 
 # quiries for selecting weather condition and casualties 
 TABLE_NAME: str = "global_traffic_accidents"
@@ -49,7 +51,6 @@ WHERE `Date` IS NOT NULL AND `Weather Condition` IS NOT NULL
 GROUP BY `Month`, `Weather Condition`
 ORDER BY STR_TO_DATE(`Month`, '%b'), `Total_Casualties` DESC;
 
->>>>>>> origin/bug-analysis-system
         '''
     
         return fetch_query_results(db_config, casualties_query)
@@ -69,6 +70,7 @@ WHERE `Weather Condition` IS NOT NULL
 GROUP BY `Weather Condition`
 ORDER BY `Total_Casualties` DESC;
 
+
     '''
     
     # Execute the query
@@ -76,12 +78,3 @@ ORDER BY `Total_Casualties` DESC;
     
     
 
-def fetch_all_weather_conditions(db_config: Dict[str, str]):
-    # result = [accidents_and_casualties_by_weather(db_config),accident_count_per_weather(db_config),highest_casualties_weather(db_config),monthly_casualties_per_weather(db_config)]
-    result = accidents_and_casualties_by_weather(db_config)
-    return result
-
-
-
-if __name__ == "__main__":
-    print(fetch_all_weather_conditions(db_config))
