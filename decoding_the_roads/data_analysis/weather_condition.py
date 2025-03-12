@@ -50,7 +50,8 @@ WHERE `Date` IS NOT NULL AND `Weather Condition` IS NOT NULL
 GROUP BY `Month`, `Weather Condition`
 ORDER BY STR_TO_DATE(`Month`, '%b'), `Total_Casualties` DESC;
 
-        '''
+
+
     
         return fetch_query_results(db_config, casualties_query)
         
@@ -69,13 +70,13 @@ WHERE `Weather Condition` IS NOT NULL
 GROUP BY `Weather Condition`
 ORDER BY `Total_Casualties` DESC;
 
-    '''
+
     
     # Execute the query
     return fetch_query_results(db_config, weather_impact_query)
     
     
+
 if __name__ == "__main__":
     result =weather_condition_casualties(db_config)
     print(result)
-    

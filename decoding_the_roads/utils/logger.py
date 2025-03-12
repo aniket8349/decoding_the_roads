@@ -2,7 +2,16 @@
 import logging
 
 def setup_logger(name, level=logging.INFO):
-    """Sets up and returns a logger that logs to the terminal."""
+    """
+    Sets up and returns a logger that logs to the terminal.
+    
+    args:
+        name: str: The name of the logger
+        level: int: The logging level
+    
+    returns:
+        logger: logging.Logger: The logger object
+    """
 
     logger = logging.getLogger(name)
     logger.setLevel(level)

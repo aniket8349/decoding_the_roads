@@ -69,7 +69,9 @@ ORDER BY Total_Casualties DESC;
     # Execute the query
     return fetch_query_results(db_config, severity_query)
     
+
 def time_based_analysis(db_config: Dict[str, str]): #to done
+
 
     time_query = f''' 
     SELECT 
@@ -110,6 +112,5 @@ ORDER BY `Full_Timestamp`;
 if __name__ == "__main__":
     result = casualties_by_full_time(db_config)
     print(result)
-    
-    
+
     
