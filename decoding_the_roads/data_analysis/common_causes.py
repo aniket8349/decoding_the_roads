@@ -16,8 +16,11 @@ FROM `global_traffic_accidents`
 WHERE `Cause` IS NOT NULL
 GROUP BY `Cause`
 ORDER BY `Total_Accidents` DESC;
+'''
+    return fetch_query_results(db_config, accident_causes_query)
+    
+def accident_causes_by_casualties(db_config: Dict[str, str]):
 
-    '''
     return fetch_query_results(db_config, accident_causes_query)
     
 def fetch_all_common_causes(db_config: Dict[str, str]):
@@ -25,7 +28,3 @@ def fetch_all_common_causes(db_config: Dict[str, str]):
     
 
     
-if __name__ == "__main__":
-    result = common_accident_causes(db_config)
-    print(result)
-

@@ -70,9 +70,8 @@ ORDER BY Total_Casualties DESC;
     return fetch_query_results(db_config, severity_query)
     
 
-def time_based_analysis(db_config: Dict[str, str]): #to done
 
-
+def time_based_analysis(db_config: Dict[str, str]):
     time_query = f''' 
     SELECT 
     HOUR(`Time`) AS `Hour_of_Day`,
@@ -109,8 +108,4 @@ ORDER BY `Full_Timestamp`;
     return fetch_query_results(db_config, full_time_query)
 
     
-if __name__ == "__main__":
-    result = casualties_by_full_time(db_config)
-    print(result)
 
-    

@@ -50,14 +50,7 @@ LIMIT 10;
     
 def fetch_all_accident_hotspots(db_config: Dict[str, str]):
     return [accident_hotspots_by_weather(db_config), accident_hotspots_by_month(db_config)]
-    
-if __name__ == "__main__":
 
-    result = accident_hotspots_by_weather(db_config)
-    print(result)
-
-    
-    
 """ 
 [[('Location', 'Weather Condition', 1024)], [('Location', 'Month', 1024)]] ?
 # accident_hotspots_by_month

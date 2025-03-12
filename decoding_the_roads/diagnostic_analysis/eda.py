@@ -103,5 +103,4 @@ ORDER BY Accident_Count DESC;
     return results
 
 # Run the function
-if __name__ == "__main__":
-    eda_results = clean_and_analyze_data(db_config)
+
