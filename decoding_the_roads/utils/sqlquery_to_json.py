@@ -49,9 +49,9 @@ def sqlquery_to_json(query_result=None, x="x", y="y", row1_num=None, row2_num=No
 # Call the function
 # sqlquery_to_json()
 
-if __name__ == "__main__":
-    query = "SELECT * FROM accident_data LIMIT 4;"
-    query_result = fetch_query_results(db_config, query)
-    print(query_result)
-    result =  sqlquery_to_json(query_result=query_result, x="country", y="accidents", row1_num=1, row2_num=2)
-    print(result)
+# if __name__ == "__main__":
+#     query = "SELECT * FROM accident_data LIMIT 4;"
+#     query_result = fetch_query_results(db_config, query)
+#     print(query_result)
+#     result =  sqlquery_to_json(query_result=query_result, x="country", y="accidents", row1_num=1, row2_num=2)
+#     print(result)

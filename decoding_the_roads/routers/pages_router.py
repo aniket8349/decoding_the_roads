@@ -45,12 +45,11 @@ async def reports(request: Request):
     # data = {'x': [1, 2, 3, 4, 5], 'y': [2, 4, 1, 5, 3]}
 
     try:
-        query = "SELECT * FROM accident_data LIMIT 4;"
+        query = "SELECT Location , Casualties FROM global_traffic_accidents LIMIT 4;"
         query_result = fetch_query_results(db_config, query)
-        # {"query_result":{"x":["USA","Canada","Mexico","USA"],"y":[1000,500,300,1000]}}
-        data = sqlquery_to_json(query_result=query_result, x="country", y="accidents", row1_num=1, row2_num=2)
-        logger.info(data)
-        fig = bar_chart(data=data, x='country', y='accidents', title='Sample Plotly Chart')
+        logger.info(query_result)
+        
+        fig = bar_chart(data=query_result, x='location', y='casualties', title='Sample Plotly Chart')
 
         plotly_html  =  fig.to_html(include_plotlyjs="cdn")
         return templates.TemplateResponse("/components/dashboard-index.html", {"request": request , "plotly_html": plotly_html})
@@ -65,9 +64,6 @@ def reports(request: Request):
         query = "SELECT Location , Casualties FROM global_traffic_accidents LIMIT 4;"
         query_result = fetch_query_results(db_config, query)
         logger.info(query_result)
-        # {"query_result":{"x":["USA","Canada","Mexico","USA"],"y":[1000,500,300,1000]}}
-        # data = sqlquery_to_json(query_result=query_result, x="location", y="casualties", row1_num=1, row2_num=2)
-        # logger.info(data)
         fig = bar_chart(data=query_result, x='location', y='casualties', title='Sample Plotly Chart')
         plotly_html  =  fig.to_html(include_plotlyjs="cdn")
         
