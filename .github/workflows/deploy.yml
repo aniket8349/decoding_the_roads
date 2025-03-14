@@ -87,7 +87,8 @@ jobs:
       - name: Remove Old Images
         run: |
           # Fetch all image digests except the most recent one
-          gcloud container images list-tags gcr.io/${{ env.YOUR_GCP_PROJECT_ID }}/decoding-the-roads \
-            --format="value(digest)" --sort-by="~timestamp" --limit=100 | tail -n +2 \
-          | xargs -I {} gcloud container images delete gcr.io/${{ env.YOUR_GCP_PROJECT_ID }}/decoding-the-roads@{} --quiet
-      
+          gcloud container images list-tags gcr.io/decoding-the-roads/decoding-the-roads \
+          --format="value(digest)" --sort-by="~timestamp" --limit=100 | tail -n +2 \
+          | awk '{print "sha256:" $1}' \
+          | xargs -I {} gcloud container images delete gcr.io/decoding-the-roads/decoding-the-roads@{} --quiet
+        
