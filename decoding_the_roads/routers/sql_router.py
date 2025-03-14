@@ -25,7 +25,7 @@ async def get_accident_trends():
         query_result = fetch_query_results(db_config, query)
 
         # convert the query result to a json object
-        columns = ["id", "country", "accidents", "year"]
+        # columns = ["id", "country", "accidents", "year"]
         # rows = json.loads(query_result)
         # data = [dict(zip(columns, row)) for row in rows]
         result_dict = {"x": [], "y": []}
