@@ -84,11 +84,11 @@ jobs:
             --set-env-vars MYSQL_ADDON_PORT=${{ secrets.MYSQL_ADDON_PORT }} \
             --set-env-vars MYSQL_ADDON_URI=${{ secrets.MYSQL_ADDON_URI }}
       
-      - name: Remove Old Images
-        run: |
-          # Fetch all image digests except the most recent one
-          gcloud container images list-tags gcr.io/decoding-the-roads/decoding-the-roads \
-          --format="value(digest)" --sort-by="~timestamp" --limit=100 | tail -n +2 \
-          | awk '{print "sha256:" $1}' \
-          | xargs -I {} gcloud container images delete gcr.io/decoding-the-roads/decoding-the-roads@{} --quiet
+      # - name: Remove Old Images
+      #   run: |
+      #     # Fetch all image digests except the most recent one
+      #     gcloud container images list-tags gcr.io/decoding-the-roads/decoding-the-roads \
+      #     --format="value(digest)" --sort-by="~timestamp" --limit=100 | tail -n +2 \
+      #     | awk '{print "sha256:" $1}' \
+      #     | xargs -I {} gcloud container images delete gcr.io/decoding-the-roads/decoding-the-roads@{} --quiet
         
