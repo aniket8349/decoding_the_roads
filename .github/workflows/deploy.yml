@@ -76,7 +76,13 @@ jobs:
             --image gcr.io/${{ env.YOUR_GCP_PROJECT_ID }}/decoding-the-roads:${{ github.sha }} \
             --platform managed \
             --region asia-south1 \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --set-env-vars MYSQL_ADDON_HOST=${{ secrets.MYSQL_ADDON_HOST }} \
+            --set-env-vars MYSQL_ADDON_DB=${{ secrets.MYSQL_ADDON_DB }} \
+            --set-env-vars MYSQL_ADDON_USER=${{ secrets.MYSQL_ADDON_USER }} \
+            --set-env-vars MYSQL_ADDON_PASSWORD=${{ secrets.MYSQL_ADDON_PASSWORD }} \
+            --set-env-vars MYSQL_ADDON_PORT=${{ secrets.MYSQL_ADDON_PORT }} \
+            --set-env-vars MYSQL_ADDON_URI=${{ secrets.MYSQL_ADDON_URI }}
       
       - name: Remove Old Images
         run: |
