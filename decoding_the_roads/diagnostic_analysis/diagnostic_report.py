@@ -17,7 +17,8 @@ def get_avg_casualties_by_weather(db_config: Dict[str, str]):
     """
     
     results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Weather Condition", "Avg Casualties"])
+    return results
+    # return pd.DataFrame(results, columns=["Weather Condition", "Avg Casualties"])
 
 
 def get_accident_counts_by_time_period(db_config: Dict[str, str]):
@@ -39,7 +40,8 @@ def get_accident_counts_by_time_period(db_config: Dict[str, str]):
     """
     
     result = fetch_query_results(db_config, query)
-    return pd.DataFrame(result, columns=["TimePeriod", "AccidentCount"])
+    return result
+    # return pd.DataFrame(result, columns=["TimePeriod", "AccidentCount"])
 
 
 #Root Cause & Comparative Analysis
@@ -51,15 +53,15 @@ def get_top_accident_prone_locations(db_config: Dict[str, str]):
     FROM global_traffic_accidents 
     GROUP BY `Location`
     ORDER BY AccidentCount DESC 
-    LIMIT 10;
+
     """
     
     # Fetch results
     results = fetch_query_results(db_config, query)
     
-    # Convert to DataFrame
-    return pd.DataFrame(results, columns=["Location", "Accident Count", "Total Casualties"])
-
+    # # Convert to DataFrame
+    # return pd.DataFrame(results, columns=["Location", "Accident Count", "Total Casualties"])
+    return results
 
 def get_most_dangerous_times(db_config: Dict[str, str]):
     """Fetches the top 5 most dangerous hours of the day based on accident count."""

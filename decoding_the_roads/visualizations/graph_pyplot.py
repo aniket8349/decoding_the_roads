@@ -1,61 +1,138 @@
+import pandas as pd
 from plotly import express as px
 from plotly.graph_objs import Figure
 from pandas import DataFrame , to_numeric , read_sql
 from ..utils.logger import setup_logger
-from typing import List
+from typing import List, Union
 logger = setup_logger(__name__)
 
-def sqlquery_to_dataframe(sql_query: str, x , y , conn=None ) -> DataFrame:
+
+
+def sqlquery_to_dataframe(sql_query, x: str, y: Union[List[str], str], conn=None) -> pd.DataFrame:
     """ 
-    Function to convert the result of a SQL query to a DataFrame
-    args:
-        sql_query: str
-        conn: Connection
-    returns:
-        df: DataFrame
+    Convert SQL query result or list of tuples into a DataFrame.
+
+    Args:
+        sql_query (str | list | DataFrame): SQL query string or already fetched data.
+        x (str): Column name for X-axis (category).
+        y (list | str): Single column or list of columns for Y-axis.
+        conn (optional): Database connection object.
+
+    Returns:
+        pd.DataFrame: Processed DataFrame.
     """
     try:
-        # df: DataFrame = DataFrame(read_sql(sql_query, conn))
-        df: DataFrame = DataFrame(sql_query)
-        # Check if `data` is a list of tuples, then convert it to DataFrame with correct column names
-        if isinstance(sql_query, list) and isinstance(sql_query[0], tuple):
-            df = DataFrame(sql_query, columns=[x, y])  # Explicitly set column names
-        else:
-            df = DataFrame(sql_query)
+        # Execute SQL query if a database connection is provided
+        # if conn:
+        #     df = pd.read_sql(sql_query, conn)
+        # else:
+        #     df = pd.DataFrame(sql_query)  # Assuming sql_query is pre-fetched data
 
-        logger.info(f"df: {df}")
+        # # Handle empty or invalid data
+        # if df.empty:
+        #     logger.warning("SQL query returned no data.")
+        #     return pd.DataFrame(columns=[x] + ([y] if isinstance(y, str) else y))
 
-        # Check if x and y exist in DataFrame
-        if x not in df.columns or y not in df.columns:
-            raise ValueError(f"Columns '{x}' or '{y}' not found in data.")
-        
-        df[y] = to_numeric(df[y])
-        df.sort_values(by=y, ascending=True)
-        return df
+        # # If data is a list of tuples, set correct column names dynamically
+        # if isinstance(sql_query, list) and all(isinstance(row, tuple) for row in sql_query):
+        #     column_count = len(sql_query[0])
+
+        #     # If `y` is a string, convert it to a list
+        #     if isinstance(y, str):
+        #         y = [y]
+
+        #     expected_columns = [x] + y
+
+        #     if column_count != len(expected_columns):
+        #         raise ValueError(f"Expected {len(expected_columns)} columns ({expected_columns}), but got {column_count}.")
+
+        #     df = pd.DataFrame(sql_query, columns=expected_columns)
+
+        # # Validate that required columns exist
+        # missing_cols = {x} | set(y) - set(df.columns)
+        # if missing_cols:
+        #     raise ValueError(f"Missing columns in data: {missing_cols}")
+
+        # # Convert `x` column to string (for categorical values)
+        # df[x] = df[x].astype(str)
+
+        # # Convert `y` columns to numeric where applicable
+        # for col in y:
+        #     df[col] = pd.to_numeric(df[col], errors='coerce')
+
+        # # Sort by first Y-column if multiple columns are present
+        # df.sort_values(by=y[0], ascending=True, inplace=True)
+
+        # logger.info(f"DataFrame created successfully:\n{df.head()}")
+        # return df
+        df = pd.DataFrame(sql_query)
+
+        # If DataFrame has only numerical column names, assign correct column names
+        if list(df.columns) == list(range(len(df.columns))):  # Checks if columns are [0, 1] or similar
+            df.columns = [x] + ([y] if isinstance(y, str) else y)  
+
+        print(df.columns.tolist())  # Debugging output
+        # return df
+        # [x] + ([y] if isinstance(y, str) else y)
+        return pd.DataFrame(sql_query, columns=df.columns.tolist())
+
     except Exception as e:
         logger.error(f"Error in sqlquery_to_dataframe: {e}")
+        return pd.DataFrame(columns=[x] + ([y] if isinstance(y, str) else y))  # Return empty DataFrame on failure
 
 # Line Chart
-def line_chart(data, x: str, y: str, title: str) -> Figure:
-    """ 
-    Function to create a line chart
-    args: 
-        data: Dict`
-        x: str
-        y: str
-        title
-    returns:
-        fig: Figure
+import plotly.express as px
+import pandas as pd
+import logging
 
+logger = logging.getLogger(__name__)
+
+# Line Chart
+def line_chart(data, x: str, y: list, title: str):
+    """ 
+    Function to create a line chart with multiple lines
+    args: 
+        data: SQL query result (list of tuples or DataFrame)
+        x: str (Column for X-axis)
+        y: list (Columns for Y-axis, multiple lines)
+        title: str (Chart Title)
+
+    returns:
+        fig: Plotly Figure
     """
     try:
+        # Convert list of tuples to DataFrame if necessary
+        if isinstance(data, list) and isinstance(data[0], tuple):
+            df = pd.DataFrame(data, columns=[x] + y)
+        else:
+            df = pd.DataFrame(data)
 
-        df = sqlquery_to_dataframe(data, x, y)
+        # Ensure `y` is a list (for multiple lines)
+        if isinstance(y, str):
+            y = [y]
 
-        fig = px.line(df, x=x, y=y, title=title)
+        # Check if required columns exist
+        missing_cols = [col for col in [x] + y if col not in df.columns]
+        if missing_cols:
+            raise ValueError(f"Missing columns in DataFrame: {missing_cols}")
+
+        # Convert DataFrame to long format for multiple lines
+        df_melted = df.melt(id_vars=[x], value_vars=y, var_name="Metric", value_name="Value")
+
+        # Create line chart with multiple lines
+        fig = px.line(df_melted, 
+                      x=x, 
+                      y="Value", 
+                      color="Metric",  # Differentiate by 'Metric' column
+                      markers=True,
+                      title=title,
+                      labels={x: "Date", "Value": "Count"})  # Correct axis labels
+
         return fig
+
     except Exception as e:
         logger.error(f"Error in line_chart: {e}")
+        return None  # Return None in case of an error
 
 # Bar Chart
 def bar_chart(data, x: str, y: str, title: str):
@@ -75,11 +152,12 @@ def bar_chart(data, x: str, y: str, title: str):
         # Sort y-axis from 0 to 7
         df = sqlquery_to_dataframe(data, x, y)
         # Create Bar Chart
-        fig = px.bar(df, x=x, y=y, title=title)
+        fig = px.bar(df, x, y, title=title)
         return fig
 
     except Exception as e:
         logger.error(f"Error in bar_chart: {e}")
+
 # Scatter Plot
 def scatter_plot(data, x: str, y: str, title: str) -> Figure:
     """ 
@@ -115,7 +193,7 @@ def pie_chart(data, names: str, values: str, title: str) -> Figure:
         fig: Figure 
     """
     try:
-        df = sqlquery_to_dataframe(data, x, y)
+        df = sqlquery_to_dataframe(data, names, values)
         fig: Figure = px.pie(df, names=names, values=values, title=title, hole=0.3)
         return fig
     except Exception as e:

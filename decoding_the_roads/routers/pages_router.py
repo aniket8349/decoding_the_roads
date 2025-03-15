@@ -13,9 +13,10 @@ from ..visualizations.graph_pyplot import line_chart , bar_chart, scatter_plot, 
 from ..utils.sqlquery_to_json import sqlquery_to_json
 from ..utils.logger import setup_logger
 from ..utils.read_json import read_json_file
-
+from ..diagnostic_analysis.eda import check_missing_values ,  check_missing_value_for_accident_id , remove_missing_values , remove_duplicates 
+from ..diagnostic_analysis.diagnostic_report import get_avg_casualties_by_weather, get_accident_counts_by_time_period, get_top_accident_prone_locations
 from ..constant.constant import CONTENT_JSON
-
+from ..constant.constant import DIAGNOSTIC_ANALYSIS 
 router = APIRouter()
 templates = Jinja2Templates(directory="decoding_the_roads/templates")
 
@@ -82,7 +83,31 @@ def reports(request: Request):
 @router.get("/analysis/diagnostic", response_class=HTMLResponse)
 def reports(request: Request):
     try:
-        return templates.TemplateResponse("/components/diagnostic.html", {"request": request})
+        eda_mising_values = check_missing_values(db_config)
+        # Fetch data
+        accident_counts_by_time_period = get_accident_counts_by_time_period(db_config)
+        avg_casualties_by_weather = get_avg_casualties_by_weather(db_config)
+        accident_prone_locations = get_top_accident_prone_locations(db_config)
+        # Create Plotly charts
+        charts = {
+            "get_top_accident_prone_locations": line_chart(accident_prone_locations, "Location", ["Accident Count", "Total Casualties"], "Top Accident Prone Locations").to_html(include_plotlyjs="cdn"),
+            "get_most_dangerous_times": bar_chart(accident_counts_by_time_period, "TimePeriod", "AccidentCount", "Accident Count by Time Period").to_html(include_plotlyjs="cdn"),
+            "get_most_dangerous_weather_conditions": bar_chart(avg_casualties_by_weather, "Weather Condition", "Avg_Casualties", "Avg Casualties by Weather").to_html(include_plotlyjs="cdn"),
+        }
+
+   
+        # Read diagnostic analysis JSON
+        diagnostic_analysis_content = read_json_file(DIAGNOSTIC_ANALYSIS)
+
+        return templates.TemplateResponse(
+            "/components/diagnostic.html",
+            {
+                "request": request,
+                "missing_data": eda_mising_values,
+                "diagnostic_analysis": diagnostic_analysis_content["Root_Cause"],
+                "charts": charts
+            }
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

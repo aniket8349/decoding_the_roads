@@ -1,0 +1,19 @@
+{
+    "Root_Cause":{
+        "get_top_accident_prone_locations":{
+            "title":"Accident prone locations",
+            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name":"Root Cause"
+        },
+        "get_most_dangerous_times":{
+            "title":"Most Dangerous Times",
+            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name":"Root Cause"
+        },
+        "get_most_dangerous_weather_conditions":{
+            "title":"Most Dangerous Weather Conditions",
+            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name":"Root Cause"
+        }
+    }
+}
