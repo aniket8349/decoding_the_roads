@@ -64,6 +64,6 @@ def get_high_severity_accidents(db_config: Dict[str, str]):
 
 
 
-# if __name__ == "__main__":
-#     df =get_high_risk_times(db_config)
-#     print(df)
+if __name__ == "__main__":
+    df =get_high_risk_times(db_config)
+    print(df)
