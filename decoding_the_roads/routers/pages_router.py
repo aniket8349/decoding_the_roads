@@ -51,7 +51,7 @@ async def reports(request: Request):
         logger.info(query_result)
         
         fig = bar_chart(data=query_result, x='location', y='casualties', title='Sample Plotly Chart')
-
+        fig.update_layout(autosize=True)
         plotly_html  =  fig.to_html(include_plotlyjs="cdn")
         return templates.TemplateResponse("/components/dashboard-index.html", {"request": request , "plotly_html": plotly_html})
 

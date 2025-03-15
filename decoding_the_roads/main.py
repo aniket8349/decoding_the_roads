@@ -24,7 +24,7 @@ app.add_event_handler("shutdown", shutdown_event)
 
 def main():
     import uvicorn
-    uvicorn.run(app="app.main:app", host="127.0.0.1", port=8000, reload=True)  # Important: app="app.main:app"
+    uvicorn.run(app="app.main:app", host="0.0.0.0", port=8080, reload=True)  # Important: app="app.main:app"
 
 
 if __name__ == "__main__":

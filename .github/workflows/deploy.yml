@@ -46,6 +46,8 @@ jobs:
     needs: test  # Ensures tests pass before deploying
     if: github.ref == 'refs/heads/main'  # Runs only on main branch
     runs-on: ubuntu-latest
+    env:
+      YOUR_GCP_PROJECT_ID: decoding-the-roads
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -58,23 +60,35 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: your-gcp-project-id
-
+          project_id: ${{ env.YOUR_GCP_PROJECT_ID }}
+          
+      - name: Authenticate with Google Cloud
+        run: gcloud auth configure-docker
+      
       - name: Build and Push Docker Image
         run: |
-          gcloud auth configure-docker
-          docker build -t gcr.io/your-gcp-project-id/decoding-the-roads:${{ github.sha }} .
-          docker push gcr.io/your-gcp-project-id/decoding-the-roads:${{ github.sha }}
-
+          docker build -t gcr.io/${{ env.YOUR_GCP_PROJECT_ID }}/decoding-the-roads:${{ github.sha }} .
+          docker push gcr.io/${{ env.YOUR_GCP_PROJECT_ID }}/decoding-the-roads:${{ github.sha }}
+      
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy decoding-the-roads \
-            --image gcr.io/your-gcp-project-id/decoding-the-roads:${{ github.sha }} \
+            --image gcr.io/${{ env.YOUR_GCP_PROJECT_ID }}/decoding-the-roads:${{ github.sha }} \
             --platform managed \
             --region asia-south1 \
-            --allow-unauthenticated
-
-      - name: Remove Old Images
-        run: |
-          gcloud container images list-tags gcr.io/your-gcp-project-id/decoding-the-roads --format="get(digest)" --limit=1 \
-          | xargs -I {} gcloud container images delete gcr.io/your-gcp-project-id/decoding-the-roads@{} --quiet
+            --allow-unauthenticated \
+            --set-env-vars MYSQL_ADDON_HOST=${{ secrets.MYSQL_ADDON_HOST }} \
+            --set-env-vars MYSQL_ADDON_DB=${{ secrets.MYSQL_ADDON_DB }} \
+            --set-env-vars MYSQL_ADDON_USER=${{ secrets.MYSQL_ADDON_USER }} \
+            --set-env-vars MYSQL_ADDON_PASSWORD=${{ secrets.MYSQL_ADDON_PASSWORD }} \
+            --set-env-vars MYSQL_ADDON_PORT=${{ secrets.MYSQL_ADDON_PORT }} \
+            --set-env-vars MYSQL_ADDON_URI=${{ secrets.MYSQL_ADDON_URI }}
+      
+      # - name: Remove Old Images
+      #   run: |
+      #     # Fetch all image digests except the most recent one
+      #     gcloud container images list-tags gcr.io/decoding-the-roads/decoding-the-roads \
+      #     --format="value(digest)" --sort-by="~timestamp" --limit=100 | tail -n +2 \
+      #     | awk '{print "sha256:" $1}' \
+      #     | xargs -I {} gcloud container images delete gcr.io/decoding-the-roads/decoding-the-roads@{} --quiet
+        
