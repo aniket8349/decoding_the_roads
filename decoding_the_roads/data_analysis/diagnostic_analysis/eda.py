@@ -1,6 +1,6 @@
 import pandas as pd
-from ..config.db_config import db_config
-from ..utils.sql_utils import execute_query, fetch_query_results
+from ...config.db_config import db_config
+from ...utils.sql_utils import execute_query, fetch_query_results
 from typing import Dict 
 
 TABLE_NAME: str = "global_traffic_accidents"

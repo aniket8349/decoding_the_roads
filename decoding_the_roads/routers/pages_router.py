@@ -13,8 +13,8 @@ from ..visualizations.graph_pyplot import line_chart , bar_chart, scatter_plot, 
 from ..utils.sqlquery_to_json import sqlquery_to_json
 from ..utils.logger import setup_logger
 from ..utils.read_json import read_json_file
-from ..diagnostic_analysis.eda import check_missing_values ,  check_missing_value_for_accident_id , remove_missing_values , remove_duplicates 
-from ..diagnostic_analysis.diagnostic_report import get_avg_casualties_by_weather, get_accident_counts_by_time_period, get_top_accident_prone_locations
+from ..data_analysis.diagnostic_analysis.eda import check_missing_values ,  check_missing_value_for_accident_id , remove_missing_values , remove_duplicates 
+from ..data_analysis.diagnostic_analysis.diagnostic_report import get_avg_casualties_by_weather, get_accident_counts_by_time_period, get_top_accident_prone_locations
 from ..constant.constant import CONTENT_JSON
 from ..constant.constant import DIAGNOSTIC_ANALYSIS 
 router = APIRouter()

@@ -1,8 +1,9 @@
 
 import pandas as pd
 from typing import Dict
-from ..config.db_config import db_config
-from ..utils.sql_utils import fetch_query_results
+
+from ...config.db_config import db_config
+from ...utils.sql_utils import fetch_query_results
 
 
 #Correlation Analysis
