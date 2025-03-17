@@ -2,17 +2,17 @@
     "Root_Cause":{
         "get_top_accident_prone_locations":{
             "title":"Accident prone locations",
-            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "description":"Accident-prone locations are areas with frequent road incidents due to traffic, infrastructure, and environmental factors. High-risk zones include busy intersections, poorly maintained roads, and highways with sudden merges. Weather conditions like fog, rain, and snow increase accident risks. Human factors such as speeding, DUI, and pedestrian-heavy areas contribute to collisions. Locations near construction zones and railway crossings often see recurring accidents. Historical accident data helps identify these spots for preventive measures. Tunnels, bridges, and underpasses pose additional risks due to low visibility and slippery conditions. Traffic monitoring and GPS data help detect high-risk areas in real-time. Predictive models can analyze past accidents, weather, and congestion to warn drivers. Avoiding these locations can significantly reduce the chances of road mishaps.",
             "chart_name":"Root Cause"
         },
         "get_most_dangerous_times":{
             "title":"Most Dangerous Times",
-            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "description":"The most dangerous times for road accidents are during rush hours, between 7-9 AM and 5-8 PM, due to heavy traffic congestion. Late-night hours from 12-4 AM are risky because of reduced visibility, driver fatigue, and drunk driving. Weekends and holidays see more accidents as people travel and sometimes drive recklessly. Bad weather conditions, such as fog, rain, and icy roads, increase accident risks by reducing vehicle control. School and work dismissal hours are hazardous due to increased pedestrian movement. Festivals and event nights contribute to crashes as crowds and celebrations create distractions. Construction zones are dangerous because of lane closures and detours that force drivers into unfamiliar routes. Sunrise and sunset reduce visibility due to glare, making it harder to see road signs and vehicles. The first snowfall or rain after a dry spell makes roads slippery, leading to skidding. Increased police checkpoints at the end of the month may cause abrupt or reckless driving behavior.",
             "chart_name":"Root Cause"
         },
         "get_most_dangerous_weather_conditions":{
             "title":"Most Dangerous Weather Conditions",
-            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "description":"Heavy rain is one of the most dangerous weather conditions, reducing visibility and making roads slippery, increasing the risk of skidding. Fog creates extremely low visibility, making it difficult for drivers to see road signs, other vehicles, and pedestrians. Snow and ice significantly reduce traction, leading to a higher likelihood of losing control, especially on bridges and overpasses. Strong winds can push vehicles off course, particularly affecting high-profile vehicles like trucks and buses. Thunderstorms bring sudden heavy rain, lightning, and debris on roads, increasing accident risks. Hailstorms can damage windshields, obstructing visibility and causing sudden stops that may lead to collisions. Extreme heat can cause tire blowouts, making highways especially dangerous for high-speed travel. Flash floods can quickly submerge roads, trapping vehicles and creating life-threatening situations. Dust storms reduce visibility to near zero, making driving almost impossible in affected areas. Freezing rain is particularly hazardous as it creates black ice, which is nearly invisible and extremely slippery, leading to sudden and severe accidents.",
             "chart_name":"Root Cause"
         }
     }
