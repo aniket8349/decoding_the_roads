@@ -104,8 +104,8 @@ def get_accidents_clear_vs_rainy(db_config: Dict[str, str]):
     GROUP BY `Weather Condition`;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Weather Condition", "Accident Count"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Weather Condition", "Accident Count"])
 
 
 #Are More Vehicles Involved in Accidents on Wet Roads?
@@ -119,8 +119,8 @@ def get_avg_vehicles_by_road_condition(db_config: Dict[str, str]):
     ORDER BY AvgVehicles DESC;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Road Condition", "Avg Vehicles Involved"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Road Condition", "Avg Vehicles Involved"])
 
 
 #Insights & Recommendations
@@ -137,8 +137,8 @@ def get_common_accident_causes(db_config: Dict[str, str]):
     LIMIT 5;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Cause", "Accident Count"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Cause", "Accident Count"])
 
 
 #Which locations need road safety improvements?
@@ -154,8 +154,8 @@ def get_locations_needing_safety_improvements(db_config: Dict[str, str]):
     LIMIT 10;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Location", "Road Condition", "Accident Count"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Location", "Road Condition", "Accident Count"])
 
 # Example usage
 if __name__ == "__main__":

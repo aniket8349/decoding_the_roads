@@ -1,19 +1,41 @@
 {
-    "Root_Cause":{
-        "get_top_accident_prone_locations":{
-            "title":"Accident prone locations",
-            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "chart_name":"Root Cause"
+    "diagnostic_analysis": {
+        "get_top_accident_prone_locations": {
+            "title": "Accident prone locations",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Top Accident Prone Locations"
         },
-        "get_most_dangerous_times":{
-            "title":"Most Dangerous Times",
-            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "chart_name":"Root Cause"
+        "get_most_dangerous_times": {
+            "title": "Most Dangerous Times",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Most Dangerous Times"
         },
-        "get_most_dangerous_weather_conditions":{
-            "title":"Most Dangerous Weather Conditions",
-            "description":"The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "chart_name":"Root Cause"
+        "get_most_dangerous_weather_conditions": {
+            "title": "Most Dangerous Weather Conditions",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Most Dangerous Weather Conditions"
+        },
+        "get_accidents_clear_vs_rainy": {
+            "title": "Most Dangerous Road Conditions",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Accidents Clear vs Rainy"
+        },
+        "get_avg_vehicles_by_road_condition": {
+            "title": "Average Vehicles by Road Condition",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Avg Vehicles by Road Condition"
+        },
+        "get_common_accident_causes": {
+            "title": "Common Accident Causes",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Common Accident Causes"
         }
     }
+ 
 }

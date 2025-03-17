@@ -97,6 +97,10 @@ MYSQL_DATABASE=
 
 ---
 
+# tailwind
+
+`tailwindcss -i decoding_the_roads/static/styles/main.css -o decoding_the_roads/static/css/main.css --watch`
+
 # Usage
 
 Ensure your virtual environment is activated.
