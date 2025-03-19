@@ -6,8 +6,6 @@ from ..utils.logger import setup_logger
 from typing import List, Union
 logger = setup_logger(__name__)
 
-
-
 def sqlquery_to_dataframe(sql_query, x: str, y: Union[List[str], str], conn=None) -> pd.DataFrame:
     """ 
     Convert SQL query result or list of tuples into a DataFrame.
@@ -80,12 +78,29 @@ def sqlquery_to_dataframe(sql_query, x: str, y: Union[List[str], str], conn=None
         logger.error(f"Error in sqlquery_to_dataframe: {e}")
         return pd.DataFrame(columns=[x] + ([y] if isinstance(y, str) else y))  # Return empty DataFrame on failure
 
-# Line Chart
-import plotly.express as px
-import pandas as pd
-import logging
+# chart theme
+def apply_chart_theme(fig):
+    """Apply a global theme to a Plotly figure."""
+    bg_color="#1F2937"
+    inner_plot_color="#374151"
+    grid_color="#4B5563"
+    grid_width=0.5
+    fig.update_layout(
+        paper_bgcolor=bg_color,  # Entire chart background
+        plot_bgcolor=inner_plot_color,   # Inner plot area background
+        font=dict(color="white"),  # White text for dark mode
+        title=dict(font=dict(size=20)),
+         xaxis=dict(
+            showgrid=True, gridcolor=grid_color, gridwidth=grid_width,
+            zeroline=True, zerolinecolor=grid_color, zerolinewidth=1
+        ),
+        yaxis=dict(
+            showgrid=True, gridcolor=grid_color, gridwidth=grid_width,
+            zeroline=True, zerolinecolor=grid_color, zerolinewidth=1
+        ),
+    )
+    return fig
 
-logger = logging.getLogger(__name__)
 
 # Line Chart
 def line_chart(data, x: str, y: list, title: str):
@@ -127,7 +142,7 @@ def line_chart(data, x: str, y: list, title: str):
                       markers=True,
                       title=title,
                       labels={x: "Date", "Value": "Count"})  # Correct axis labels
-
+        apply_chart_theme(fig)  # Apply global theme
         return fig
 
     except Exception as e:

@@ -7,6 +7,7 @@ MODELS_DIR: str = "./models"
 REPORTS_DIR: str = "./reports"
 CONTENT_JSON: str = "./decoding_the_roads/content/content.json"
 DIAGNOSTIC_ANALYSIS: str = "./decoding_the_roads/content/diagnostic_analysis.json"
+PERSPECTIVE_ANALYSIS: str = "./decoding_the_roads/content/perspective_analysis.json"
 # Table name
  
 TABLE_NAME: str = 'global_traffic_accidents'

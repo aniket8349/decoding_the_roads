@@ -1,0 +1,5 @@
+.main-svg{
+    border-radius: 12px;  /* Adjust for more/less rounding */
+    overflow: hidden; /* Ensures corners are clipped */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}

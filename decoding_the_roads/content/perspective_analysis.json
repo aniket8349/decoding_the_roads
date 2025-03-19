@@ -1,0 +1,28 @@
+{
+    "prescriptive_analysis": {
+        "accident_hotspots": {
+            "title": "Accident Hotspots",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Accident Hotspots"
+        },
+        "high_risk_times": {
+            "title": "High Risk Times",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "High Risk Times"
+        },
+        "weather_related_accidents": {
+            "title": "Weather Related Accidents",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "Weather Related Accidents"
+        },
+        "high_severity_accidents": {
+            "title": "High Severity Accidents",
+            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
+            "chart_name": "High Severity Accidents"
+        }
+    }
+}
