@@ -38,6 +38,12 @@
             "explination": "This visualization helps identify leading factors behind accidents, enabling targeted prevention strategies. If speeding is a dominant cause, stricter enforcement and speed cameras may be necessary. A high percentage of distracted driving accidents could justify awareness campaigns on mobile phone use while driving. Drunk driving-related accidents may indicate the need for more frequent sobriety checkpoints. Policymakers can use these insights to implement regulations tailored to reducing the most frequent causes. Public safety campaigns and driver education programs can also be designed based on this data. ",
             "chart_name": "Common Accident Causes"
 
+        },
+        "get_locations_needing_safety_improvements": {
+            "title": "Locations Needing Safety Improvements",
+            "description": "A map visualization pinpoints areas with high accident rates, indicating locations that require safety improvements. By plotting accident data on a map, authorities can identify accident-prone zones and prioritize interventions like traffic signals, speed bumps, or pedestrian crossings.",
+            "explination": "This visualization helps urban planners and transportation departments allocate resources effectively to enhance road safety. By focusing on specific locations with high accident densities, authorities can implement targeted measures to reduce risks. The map can also reveal patterns in accident distribution, such as clusters near schools, hospitals, or intersections. This information guides the design of safer infrastructure and traffic management strategies. Emergency responders can use the map to optimize routes and response times to high-risk areas. Overall, this visualization supports data-driven decision-making for improving road safety.",
+            "chart_name": "Locations Needing Safety Improvements"
         }
     }
 
