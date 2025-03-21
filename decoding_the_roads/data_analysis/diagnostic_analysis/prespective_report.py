@@ -4,17 +4,28 @@ from ...config.db_config import db_config
 from ...utils.sql_utils import execute_query, fetch_query_results
 from typing import Dict 
 
+# accident-prone areas based on geographical distribution
+
+def get_accident_prone_longitudinal(db_config: Dict[str, str]):
+    query = f"""SELECT 
+    Latitude, 
+    Longitude, 
+    COUNT(Accident_ID) AS Accident_Count
+FROM accidents
+GROUP BY Latitude, Longitude
+ORDER BY Accident_Count DESC;
+"""
+    results = fetch_query_results(db_config, query)
+
 def get_accident_hotspots(db_config: Dict[str, str]):            #get_accident_prone_location
     """Finds locations with the highest accident occurrences."""
     
     query = """
-    SELECT 
-    Latitude, 
-    Longitude, 
-    COUNT('Accident ID') AS Accident_Count
-FROM global_traffic_accidents
-GROUP BY Latitude, Longitude
-ORDER BY Accident_Count DESC;
+    SELECT Location, COUNT(*) AS AccidentCount
+    FROM global_traffic_accidents 
+    GROUP BY Location
+    ORDER BY AccidentCount DESC
+    LIMIT 10;
 """
     
     results = fetch_query_results(db_config, query)
