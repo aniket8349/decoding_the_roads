@@ -60,4 +60,9 @@ LIMIT 10;
 if __name__ == "__main__":
     result = casualties_by_location_road_condition(db_config)
     print(result)
-    
+    """ 
+    SELECT Location, COUNT(*) AS NumberOfAccidents
+    FROM global_traffic_accidents  
+    GROUP BY Location 
+    ORDER BY NumberOfAccidents DESC;
+    """

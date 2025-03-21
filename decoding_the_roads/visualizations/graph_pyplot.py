@@ -79,31 +79,45 @@ def sqlquery_to_dataframe(sql_query, x: str, y: Union[List[str], str], conn=None
         return pd.DataFrame(columns=[x] + ([y] if isinstance(y, str) else y))  # Return empty DataFrame on failure
 
 # chart theme
-def apply_chart_theme(fig):
-    """Apply a global theme to a Plotly figure."""
-    bg_color="#1F2937"
-    inner_plot_color="#374151"
-    grid_color="#4B5563"
-    grid_width=0.5
+def apply_chart_theme(fig, theme: str = "light") -> Figure:
+    """Apply a global theme to a Plotly figure based on the user's system preference."""
+    themes = {
+        "dark": {
+            "bg_color": "#1F2937",
+            "inner_plot_color": "#374151",
+            "grid_color": "#4B5563",
+            "text_color": "white"
+        },
+        "light": {
+            "bg_color": "#FFFFFF",
+            "inner_plot_color": "#F3F4F6",
+            "grid_color": "#D1D5DB",
+            "text_color": "black"
+        }
+    }
+
+    selected_theme = themes.get(theme, themes["light"])  # Default to light mode
+    grid_width = 0.5
+
     fig.update_layout(
-        paper_bgcolor=bg_color,  # Entire chart background
-        plot_bgcolor=inner_plot_color,   # Inner plot area background
-        font=dict(color="white"),  # White text for dark mode
+        paper_bgcolor=selected_theme["bg_color"],  
+        plot_bgcolor=selected_theme["inner_plot_color"],  
+        font=dict(color=selected_theme["text_color"]),  
         title=dict(font=dict(size=20)),
-         xaxis=dict(
-            showgrid=True, gridcolor=grid_color, gridwidth=grid_width,
-            zeroline=True, zerolinecolor=grid_color, zerolinewidth=1
+        xaxis=dict(
+            showgrid=True, gridcolor=selected_theme["grid_color"], gridwidth=grid_width,
+            zeroline=True, zerolinecolor=selected_theme["grid_color"], zerolinewidth=1
         ),
         yaxis=dict(
-            showgrid=True, gridcolor=grid_color, gridwidth=grid_width,
-            zeroline=True, zerolinecolor=grid_color, zerolinewidth=1
+            showgrid=True, gridcolor=selected_theme["grid_color"], gridwidth=grid_width,
+            zeroline=True, zerolinecolor=selected_theme["grid_color"], zerolinewidth=1
         ),
     )
     return fig
 
 
 # Line Chart
-def line_chart(data, x: str, y: list, title: str):
+def line_chart(data, x: str, y: list, title: str, theme: str ) -> Figure:
     """ 
     Function to create a line chart with multiple lines
     args: 
@@ -116,20 +130,7 @@ def line_chart(data, x: str, y: list, title: str):
         fig: Plotly Figure
     """
     try:
-        # Convert list of tuples to DataFrame if necessary
-        if isinstance(data, list) and isinstance(data[0], tuple):
-            df = pd.DataFrame(data, columns=[x] + y)
-        else:
-            df = pd.DataFrame(data)
-
-        # Ensure `y` is a list (for multiple lines)
-        if isinstance(y, str):
-            y = [y]
-
-        # Check if required columns exist
-        missing_cols = [col for col in [x] + y if col not in df.columns]
-        if missing_cols:
-            raise ValueError(f"Missing columns in DataFrame: {missing_cols}")
+        df = sqlquery_to_dataframe(data, x, y)
 
         # Convert DataFrame to long format for multiple lines
         df_melted = df.melt(id_vars=[x], value_vars=y, var_name="Metric", value_name="Value")
@@ -142,7 +143,7 @@ def line_chart(data, x: str, y: list, title: str):
                       markers=True,
                       title=title,
                       labels={x: "Date", "Value": "Count"})  # Correct axis labels
-        apply_chart_theme(fig)  # Apply global theme
+        apply_chart_theme(fig, theme)  # Apply global theme
         return fig
 
     except Exception as e:
@@ -150,7 +151,7 @@ def line_chart(data, x: str, y: list, title: str):
         return None  # Return None in case of an error
 
 # Bar Chart
-def bar_chart(data, x: str, y: str, title: str):
+def bar_chart(data, x: str, y: str, title: str, theme: str ):
     """ 
     Function to create a bar chart
     args:
@@ -168,13 +169,15 @@ def bar_chart(data, x: str, y: str, title: str):
         df = sqlquery_to_dataframe(data, x, y)
         # Create Bar Chart
         fig = px.bar(df, x, y, title=title)
+        apply_chart_theme(fig, theme)  # Apply global theme
+
         return fig
 
     except Exception as e:
         logger.error(f"Error in bar_chart: {e}")
 
 # Scatter Plot
-def scatter_plot(data, x: str, y: str, title: str) -> Figure:
+def scatter_plot(data, x: str, y: str, title: str, theme: str ) -> Figure:
     """ 
     Function to create a scatter plot
     args:
@@ -190,12 +193,13 @@ def scatter_plot(data, x: str, y: str, title: str) -> Figure:
         
         df = sqlquery_to_dataframe(data, x, y)
         fig: Figure = px.scatter(df, x=x, y=y, title=title, color=y, size=y)
+        apply_chart_theme(fig, theme)  # Apply global theme
         return fig
     except Exception as e:
         logger.error(f"Error in scatter_plot: {e}")
 
 # Pie Chart
-def pie_chart(data, names: str, values: str, title: str) -> Figure:
+def pie_chart(data, names: str, values: str, title: str , theme: str ) -> Figure:
     """ 
     Function to create a pie chart
     args:
@@ -210,12 +214,14 @@ def pie_chart(data, names: str, values: str, title: str) -> Figure:
     try:
         df = sqlquery_to_dataframe(data, names, values)
         fig: Figure = px.pie(df, names=names, values=values, title=title, hole=0.3)
+        apply_chart_theme(fig, theme)  # Apply global theme
         return fig
+    
     except Exception as e:
         logger.error(f"Error in pie_chart: {e}")
 
 # Bubble Chart
-def bubble_chart(data, x: str, y: str, size: str, title: str) -> Figure:
+def bubble_chart(data, x: str, y: str, size: str, title: str, theme: str ) -> Figure:
     """ 
     Function to create a bubble chart
     args:
@@ -230,12 +236,13 @@ def bubble_chart(data, x: str, y: str, size: str, title: str) -> Figure:
     try:
         df = sqlquery_to_dataframe(data, x, y)
         fig: Figure = px.scatter(df, x=x, y=y, size=size, color=size, title=title)
+        apply_chart_theme(fig, theme)  # Apply global theme
         return fig
     except Exception as e:
         logger.error(f"Error in bubble_chart: {e}")
 
 # Categorical Axes Chart
-def categorical_axes_chart(data, x: str, y: str, category: str, title: str) -> Figure:
+def categorical_axes_chart(data, x: str, y: str, category: str, title: str, theme: str ) -> Figure:
     """ 
     Function to create a categorical axes chart
     args:
@@ -250,10 +257,32 @@ def categorical_axes_chart(data, x: str, y: str, category: str, title: str) -> F
     try:
         df = sqlquery_to_dataframe(data, x, y)
         fig: Figure = px.bar(df, x=x, y=y, color=category, title=title, barmode="group")
+        apply_chart_theme(fig, theme)  # Apply global theme
         return fig
     except Exception as e:
         logger.error(f"Error in categorical_axes_chart: {e}")
 
+# density_heatmap
+
+def density_heatmap(data, x: str, y: str, z: str, title: str, theme: str ) -> Figure:
+    """ 
+    Function to create a density heatmap
+    args:
+        data: Dict
+        x: str
+        y: str
+        title: str
+
+    returns:
+        fig: Figure 
+    """
+    try:
+        df = sqlquery_to_dataframe(data, x, y)
+        fig: Figure = px.density_heatmap(df, x=x, y=y, z=z, title=title ,  color_continuous_scale="Blues")
+        apply_chart_theme(fig, theme)  # Apply global theme
+        return fig
+    except Exception as e:
+        logger.error(f"Error in density_heatmap: {e}")
 
 if __name__ == "__main__":
     fig = line_chart(data={'x': [1, 2, 3, 4, 5], 'y': [2, 4, 1, 5, 3]}, x='x', y='y', title='Sample Plotly Chart')

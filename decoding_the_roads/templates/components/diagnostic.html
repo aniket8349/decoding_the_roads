@@ -13,7 +13,8 @@
             Exploratory Data Analysis
         </h5>
         <p class="font-normal text-gray-700 dark:text-gray-400">
-            Exploratory Data Analysis (EDA) is a critical process in data analysis that involves summarizing the main characteristics of a dataset.
+            Exploratory Data Analysis (EDA) is a critical process in data analysis that involves summarizing the main
+            characteristics of a dataset.
         </p>
 
         <!-- table -->
@@ -50,25 +51,26 @@
 </div>
 <!-- *  -->
 
-<div class="flex flex-col items-center justify-center w-full gap-4 mb-4 mt-4 rounded-sm ">
+<div class="flex flex-col items-center justify-center w-full gap-6 mb-4 mt-4 rounded-sm text-white">
     {% for key, value in diagnostic_analysis.items() %}
-    <a href="#" class="block w-full  p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <a href="#"
+        class="block w-full gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <!-- Chart Title -->
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ value["title"] }}
         </h5>
 
         <!-- Chart Description -->
-        <p class="font-normal text-gray-700 dark:text-gray-400">
-            {{ value.description }}
+        <p class="font-normal mt-6 mb-6 text-gray-700 dark:text-gray-400">
+            {{ value.description | replace("\n", "<br>") | safe }}
         </p>
 
-        <p class="font-normal text-gray-700 dark:text-gray-400">
-            {{ value.explination }}
+        <p class="font-normal mt-6 mb-6 text-gray-700 dark:text-gray-400">
+            {{ value.explination | replace("\n", "<br>") | safe }}
         </p>
 
         <!-- Chart -->
-        <div class="flex items-center justify-center">
+        <div class="flex mt-4 items-center justify-center">
             {{ charts[key] | safe }}
         </div>
     </a>
