@@ -1,7 +1,7 @@
 {% extends "pages/dashboard.html" %}
 {% block title %}Diagnostic{% endblock %}
 {% block content %}
-<div class="flex items-start justify-center flex-col gap-2 h-full mb-4 mt-4 rounded-sm">
+<div class="flex items-start justify-center flex-col gap-2 h-full mb-4 mt-4 rounded-sm text-black dark:text-white">
     <!--  bg-gray-50 dark:bg-gray-800 -->
     <h2 class=" mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Diagnostic Analysis for Global
         Traffic Accidents Dataset</h2>
@@ -51,7 +51,7 @@
 </div>
 <!-- *  -->
 
-<div class="flex flex-col items-center justify-center w-full gap-6 mb-4 mt-4 rounded-sm text-white">
+<div class="flex flex-col items-center justify-center w-full gap-6 mb-4 mt-4 rounded-sm text-black dark:text-white">
     {% for key, value in diagnostic_analysis.items() %}
     <a href="#"
         class="block w-full gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">

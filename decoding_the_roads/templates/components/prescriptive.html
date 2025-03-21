@@ -1,7 +1,7 @@
 {% extends "pages/dashboard.html" %}
 {% block title %}Prescriptive{% endblock %}
 {% block content %}
-<div class="flex flex-col items-center justify-center w-full gap-4 mb-4 mt-4 rounded-sm ">
+<div class="flex flex-col items-center justify-center w-full gap-4 mb-4 mt-4 rounded-sm text-black dark:text-white">
     {% for key, value in prescriptive_analysis.items() %}
     <a href="#"
         class="block w-full gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
