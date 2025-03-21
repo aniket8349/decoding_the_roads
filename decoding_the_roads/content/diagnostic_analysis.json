@@ -3,8 +3,12 @@
     "diagnostic_analysis": {
         "get_top_accident_prone_locations": {
             "title": "Accident prone locations",
-            "description": "A heatmap visually represents accident-prone locations by highlighting high-risk areas based on historical accident data.\n It uses color intensity to indicate the frequency of accidents in different regions. Darker or brighter areas signify higher accident densities.",
-            "explination": " Heatmaps help identify locations with recurring accidents, allowing authorities to implement safety measures like improved road signs, lighting, or speed controls.\n By analyzing trends in accident hotspots, city planners can optimize traffic flow and road design. This visualization is especially useful for pinpointing intersections, highways, and urban zones that require immediate intervention. \nThe heatmap provides a quick, intuitive view of accident distribution, making it easier for decision-makers to focus on high-risk areas.",
+
+
+
+
+            "description": "A heatmap visually represents accident-prone locations by highlighting high-risk areas based on historical accident data. It uses color intensity to indicate the frequency of accidents in different regions. Darker or brighter areas signify higher accident densities.",
+            "explination": " Heatmaps help identify locations with recurring accidents, allowing authorities to implement safety measures like improved road signs, lighting, or speed controls. By analyzing trends in accident hotspots, city planners can optimize traffic flow and road design. This visualization is especially useful for pinpointing intersections, highways, and urban zones that require immediate intervention. The heatmap provides a quick, intuitive view of accident distribution, making it easier for decision-makers to focus on high-risk areas.",
             "chart_name": "Top Accident Prone Locations"
         },
         "get_most_dangerous_times": {
