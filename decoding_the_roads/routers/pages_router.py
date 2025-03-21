@@ -134,7 +134,7 @@ async def reports(request: Request):
     except Exception as e:
         logger.error(f"An error occurred dashboard-index: {str(e)} ")
         raise HTTPException(status_code=500, detail=str(e))
-   
+
 @router.get("/chart", response_class=HTMLResponse)
 def reports(request: Request):
     try:
