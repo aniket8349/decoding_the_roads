@@ -172,7 +172,7 @@ def reports(request: Request):
         avg_vehicles_by_road_condition = get_avg_vehicles_by_road_condition(db_config)
         # Insights & Recommendations
         common_accident_causes = get_common_accident_causes(db_config)
-        locations_needing_safety_improvements = get_locations_needing_safety_improvements(db_config)
+        # locations_needing_safety_improvements = get_locations_needing_safety_improvements(db_config)
         # Create Plotly charts
         charts = {
             "get_top_accident_prone_locations": line_chart(accident_prone_locations, "Location", ["Accident Count", "Total Casualties"], "Top Accident Prone Locations",theme=theme_cookies).to_html(include_plotlyjs="cdn"),
@@ -183,7 +183,7 @@ def reports(request: Request):
             "get_avg_vehicles_by_road_condition": bar_chart(avg_vehicles_by_road_condition, "Road Condition", "Avg_Vehicles", "Avg Vehicles by Road Condition", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
             # Insights & Recommendations
             "get_common_accident_causes": pie_chart(common_accident_causes, "Cause", "Accident Count", "Accident Count by Cause", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
-            "get_locations_needing_safety_improvements": bar_chart(locations_needing_safety_improvements, "Location", "Accident Count", "Accident Count by Location", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
+            # "get_locations_needing_safety_improvements": density_heatmap(locations_needing_safety_improvements, x="Location", y="Road Condition ",z="Accident Count", title="Accident Count by Location", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
             
         }
 
