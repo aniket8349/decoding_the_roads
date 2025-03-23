@@ -9,4 +9,5 @@ matplotlib
 jinja2
 plotly
 pytailwindcss
-scikit-learn 
+scikit-learn
+markdown 

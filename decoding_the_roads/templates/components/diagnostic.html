@@ -1,12 +1,79 @@
 {% extends "pages/dashboard.html" %}
 {% block title %}Diagnostic{% endblock %}
 {% block content %}
-<div class="flex items-center justify-center h-48 mb-4 mt-4 rounded-sm bg-gray-50 dark:bg-gray-800">
-    container 1
-    </div>
-    
-    <div class="flex items-center justify-center h-48 mb-4 mt-4 rounded-sm bg-gray-50 dark:bg-gray-800">
-    container 2
-    </div>
-{% endblock %}
+<div class="flex items-start justify-center flex-col gap-2 h-full mb-4 mt-4 rounded-sm text-black dark:text-white">
+    <!--  bg-gray-50 dark:bg-gray-800 -->
+    <h2 class=" mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Diagnostic Analysis for Global
+        Traffic Accidents Dataset</h2>
+    <!-- dark:hover:bg-gray-700 hover:bg-gray-100  -->
+    <a href="#"
+        class="flex flex-col gap-4  max-w-fit p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
 
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Exploratory Data Analysis
+        </h5>
+        <p class="font-normal text-gray-700 dark:text-gray-400">
+            Exploratory Data Analysis (EDA) is a critical process in data analysis that involves summarizing the main
+            characteristics of a dataset.
+        </p>
+
+        <!-- table -->
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right  overflow-y text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        {% for key in missing_data.keys() %}
+                        <th scope="col" class="px-6 py-3">{{ key.replace('_', ' ') }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                        {% for value in missing_data.values() %}
+                        <td class="px-6 py-4 text-gray-900 dark:text-white text-center">
+                            {{ value }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div>
+            <!-- chart -->
+
+        </div>
+    </a>
+
+
+</div>
+<!-- *  -->
+
+<div class="flex flex-col items-center justify-center w-full gap-6 mb-4 mt-4 rounded-sm text-black dark:text-white">
+    {% for key, value in diagnostic_analysis.items() %}
+    <a href="#"
+        class="block w-full gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <!-- Chart Title -->
+        <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{ value["title"] }}
+        </h5>
+
+        <!-- Chart Description -->
+        <p class="font-normal mt-6 mb-6 text-gray-700 dark:text-gray-400">
+            {{ value.description | replace("\n", "<br>") | safe }}
+        </p>
+
+        <p class="font-normal mt-6 mb-6 text-gray-700 dark:text-gray-400">
+            {{ value.explination | replace("\n", "<br>") | safe }}
+        </p>
+
+        <!-- Chart -->
+        <div class="w-full md:w-3/4 lg:w-2/3 h-auto rounded-md">
+            {{ charts[key] | safe }}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

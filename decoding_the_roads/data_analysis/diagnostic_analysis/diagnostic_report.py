@@ -1,8 +1,9 @@
 
 import pandas as pd
 from typing import Dict
-from ..config.db_config import db_config
-from ..utils.sql_utils import fetch_query_results
+
+from ...config.db_config import db_config
+from ...utils.sql_utils import fetch_query_results
 
 
 #Correlation Analysis
@@ -17,7 +18,8 @@ def get_avg_casualties_by_weather(db_config: Dict[str, str]):
     """
     
     results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Weather Condition", "Avg Casualties"])
+    return results
+    # return pd.DataFrame(results, columns=["Weather Condition", "Avg Casualties"])
 
 
 def get_accident_counts_by_time_period(db_config: Dict[str, str]):
@@ -39,7 +41,8 @@ def get_accident_counts_by_time_period(db_config: Dict[str, str]):
     """
     
     result = fetch_query_results(db_config, query)
-    return pd.DataFrame(result, columns=["TimePeriod", "AccidentCount"])
+    return result
+    # return pd.DataFrame(result, columns=["TimePeriod", "AccidentCount"])
 
 
 #Root Cause & Comparative Analysis
@@ -51,15 +54,15 @@ def get_top_accident_prone_locations(db_config: Dict[str, str]):
     FROM global_traffic_accidents 
     GROUP BY `Location`
     ORDER BY AccidentCount DESC 
-    LIMIT 10;
+
     """
     
     # Fetch results
     results = fetch_query_results(db_config, query)
     
-    # Convert to DataFrame
-    return pd.DataFrame(results, columns=["Location", "Accident Count", "Total Casualties"])
-
+    # # Convert to DataFrame
+    # return pd.DataFrame(results, columns=["Location", "Accident Count", "Total Casualties"])
+    return results
 
 def get_most_dangerous_times(db_config: Dict[str, str]):
     """Fetches the top 5 most dangerous hours of the day based on accident count."""
@@ -101,8 +104,8 @@ def get_accidents_clear_vs_rainy(db_config: Dict[str, str]):
     GROUP BY `Weather Condition`;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Weather Condition", "Accident Count"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Weather Condition", "Accident Count"])
 
 
 #Are More Vehicles Involved in Accidents on Wet Roads?
@@ -116,8 +119,8 @@ def get_avg_vehicles_by_road_condition(db_config: Dict[str, str]):
     ORDER BY AvgVehicles DESC;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Road Condition", "Avg Vehicles Involved"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Road Condition", "Avg Vehicles Involved"])
 
 
 #Insights & Recommendations
@@ -134,11 +137,12 @@ def get_common_accident_causes(db_config: Dict[str, str]):
     LIMIT 5;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Cause", "Accident Count"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Cause", "Accident Count"])
 
 
 #Which locations need road safety improvements?
+# FIX : using limit in query, combine data of all location together 
 def get_locations_needing_safety_improvements(db_config: Dict[str, str]):
     """Fetches the top 10 locations with the most accidents in hazardous road conditions."""
     
@@ -151,8 +155,8 @@ def get_locations_needing_safety_improvements(db_config: Dict[str, str]):
     LIMIT 10;
     """
     
-    results = fetch_query_results(db_config, query)
-    return pd.DataFrame(results, columns=["Location", "Road Condition", "Accident Count"])
+    return fetch_query_results(db_config, query)
+    # return pd.DataFrame(results, columns=["Location", "Road Condition", "Accident Count"])
 
 # Example usage
 if __name__ == "__main__":

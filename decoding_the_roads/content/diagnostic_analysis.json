@@ -1,0 +1,55 @@
+{
+
+    "diagnostic_analysis": {
+        "get_top_accident_prone_locations": {
+            
+                "title": "Accident Prone Locations",
+                "description": "🌐 **Heatmap Visualization:** Displays accident-prone locations by highlighting **high-risk areas** based on historical accident data. The heatmap uses **color intensity** to indicate accident frequencies — darker or brighter areas represent higher accident densities.",
+                "explination": "**Why It Matters:**\n- Identifies **recurring accident hotspots**, helping authorities implement safety measures like:\n  - Improved **road signs**\n  - Better **lighting**\n  - Stricter **speed controls**\n- Assists city planners in optimizing **traffic flow** and **road design**.\n- Effective for pinpointing **intersections**, **highways**, and **urban zones** needing immediate intervention.\n- Provides a quick, intuitive view of accident distribution, helping decision-makers focus on **high-risk areas** for targeted solutions.",
+                "chart_name": "Top Accident Prone Locations"
+            
+            
+        },
+                "get_most_dangerous_times": {
+                    "title": "Most Dangerous Times",
+                "description": "📈 **Line Chart Analysis:** Tracks accident frequency across different times of the day, revealing peaks and dips in occurrences. It helps visualize when accidents are most frequent, like during **rush hours** or **late-night periods**. The x-axis represents time, while the y-axis displays accident counts.",
+                "explination": "**Key Insights:**\n- Identifies peak risk periods, such as:\n  - **Rush hours:** 7-9 AM, 5-8 PM\n  - **Late-night periods:** Increased risk due to reduced visibility and driver fatigue\n- Understanding these patterns helps authorities implement:\n  - **Traffic control** to manage congestion\n  - **Awareness campaigns** to educate drivers\n  - **Stricter enforcement** to reduce violations\n\n**Practical Applications:**\n- Policymakers and emergency responders can allocate resources more efficiently, like increasing patrols during high-risk periods.\n- The chart can also reveal **seasonal** or **weather-related patterns** that contribute to accidents, guiding safety measures year-round.",
+                "chart_name": "Most Dangerous Times"
+
+        },
+                "get_most_dangerous_weather_conditions": {
+                    "title": "Most Dangerous Weather Conditions",
+                "description": "🌦️ **Bar Chart Analysis:** Compares the number of accidents occurring under different weather conditions, such as **rain**, **fog**, **snow**, and **clear skies**. The x-axis represents weather types, while the y-axis shows the number of accidents recorded.",
+                "explination": "**Why It Matters:**\n- Assesses the impact of weather on road safety, highlighting conditions that pose the greatest risks.\n- **Rain** and **fog** often reduce visibility, increasing accident risks.\n- **Icy roads** contribute to skidding incidents and loss of vehicle control.\n\n**Practical Applications:**\n- Authorities can issue **weather advisories** and recommend safer driving speeds during adverse conditions.\n- Road maintenance teams can prepare for **adverse conditions**, like deploying salt trucks before snowstorms.\n- Urban planners can use these insights to improve **drainage systems** in flood-prone areas, reducing road hazards.",
+                "chart_name": "Most Dangerous Weather Conditions"
+        },
+                "get_accidents_clear_vs_rainy": {
+                    "title": "Most Dangerous Road Conditions",
+                "description": "🌧️ **Weather Comparison Analysis:** This visualization compares the number of accidents that occur during **clear weather** versus **rainy conditions**. It highlights the impact of rainfall on road safety by illustrating accident frequencies under these two weather types.",
+                "explination": "**Why It Matters:**\n- Rainy conditions often lead to **reduced visibility**, **slippery roads**, and **longer braking distances**, increasing accident risks.\n- Analyzing accident rates under clear and rainy weather helps authorities assess the need for:\n  - Improved **drainage systems**\n  - Stricter **speed limits**\n  - Enhanced **road maintenance**\n- This comparison assists in designing **weather-specific safety measures**, such as increased awareness campaigns during monsoon seasons.\n\n**Who Benefits:**\n- **Insurance companies:** Can evaluate risk factors for policy adjustments.\n- **Transportation departments:** Use insights to improve road infrastructure and ensure safer travel during adverse weather conditions.",
+                "chart_name": "Accidents Clear vs Rainy"
+            },
+                "get_avg_vehicles_by_road_condition": {
+                    "title": "Average Vehicles by Road Condition",
+                 "description": "📊 **Bar Chart Visualization:** Categorizes accident rates based on road conditions like **dry**, **wet**, **icy**, or **under construction**. The x-axis represents road types, while the y-axis displays accident frequencies.",
+                "explination": "**Why It Matters:**\n- Helps authorities improve **infrastructure** and **traffic regulations**.\n- **Wet** and **icy** roads increase the risk of skidding, while construction zones pose hazards due to lane changes and reduced visibility.\n- Data from this visualization can guide policies like **mandatory winter tires** in snowy regions or stricter safety measures in construction zones.\n- Road maintenance agencies can use these insights to prioritize repairs on **high-risk roads**.\n\n**Application:** Driver education programs can emphasize safety measures for specific road conditions to prevent accidents.",
+                "chart_name": "Avg Vehicles by Road Condition"
+
+            },
+                "get_common_accident_causes": {
+                    "title": "Common Accident Causes",
+                "description": "📊 **Pie Chart Visualization:** Represents the proportion of different causes of accidents, such as **speeding**, **distracted driving**, **drunk driving**, and **weather conditions**. Each slice illustrates the percentage contribution of a cause to total accidents.",
+                "explination": "**How It Helps:**\n- Identifies leading factors behind accidents for **targeted prevention strategies**.\n- If **speeding** is a dominant cause, stricter enforcement and speed cameras may be necessary.\n- A high percentage of **distracted driving** accidents could justify awareness campaigns on mobile phone use while driving.\n- **Drunk driving**-related accidents may indicate the need for more frequent sobriety checkpoints.\n- Policymakers can use these insights to implement regulations tailored to reducing the most frequent causes.\n\n**Application:** Public safety campaigns and driver education programs can be designed based on this data.",
+                "chart_name": "Common Accident Causes"
+},
+                "get_locations_needing_safety_improvements": {
+                    "title": "Locations Needing Safety Improvements",
+                "description": "📍 **Map Visualization:** Pinpoints areas with high accident rates, highlighting locations that require **safety improvements**. By plotting accident data on a map, authorities can identify **accident-prone zones** and prioritize interventions like traffic signals, speed bumps, or pedestrian crossings.",
+                "explination": "**Why It Matters:**\n- **Urban planners** and transportation departments can allocate resources effectively to **enhance road safety**.\n- Identifying zones with high accident densities enables **targeted measures** to reduce risks.\n- The map can reveal patterns in accident distribution, like clusters near **schools**, **hospitals**, or **intersections**.\n- Emergency responders can use the map to optimize routes and minimize response times to **high-risk areas**.\n\n**Outcome:** This visualization supports **data-driven decision-making** for improving road safety and designing **safer infrastructure**.",
+                "chart_name": "Locations Needing Safety Improvements"
+                
+            }
+            
+    }
+
+}
