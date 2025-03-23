@@ -100,18 +100,18 @@ async def reports(request: Request):
         casualties_by_month = common_accident_causes(db_config)
         
         fig = line_chart(data=casualties_by_month, x='Cause', y=['Total_Accidents' , 'Total_Casualties'], title='Common Accident Causes', theme=theme_cookies).to_html(include_plotlyjs="cdn")
+        plotly_html  = fig
+
+
         # fig.update_layout(autosize=True)
-
-
         # heat_fig = density_heatmap(data=query_result, x='Location', y='TotalCasualties', z="AccidentCount" ,title='Accident Frequency by Location & Time', theme=theme_cookies).to_html(include_plotlyjs="cdn")
-        # plotly_html  = fig
         return templates.TemplateResponse(
             "/components/dashboard-index.html", 
             {
                 "request": request , 
                 "plotly_html": plotly_html,
                 "card_data": card_data,
-                "heat_fig": heat_fig
+                # "heat_fig": heat_fig
             })
 
     except Exception as e:
