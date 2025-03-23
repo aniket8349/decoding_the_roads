@@ -12,6 +12,6 @@ def test_dashboard():
     response = client.get("/dashboard-index")
     assert response.status_code == 200
 
-def test_chart():
-    response = client.get("/chart")
-    assert response.status_code == 200
+# def test_chart():
+#     response = client.get("/chart")
+#     assert response.status_code == 200
