@@ -102,15 +102,9 @@ async def reports(request: Request):
         fig = line_chart(data=casualties_by_month, x='Cause', y=['Total_Accidents' , 'Total_Casualties'], title='Common Accident Causes', theme=theme_cookies).to_html(include_plotlyjs="cdn")
         # fig.update_layout(autosize=True)
 
-        data = {
-            "Location": ["New York", "Los Angeles", "Chicago", "Houston", "Miami", "New York", "Los Angeles", "Chicago", "Houston", "Miami"],
-            "Time of Day": ["Morning", "Morning", "Morning", "Morning", "Morning", "Evening", "Evening", "Evening", "Evening", "Evening"],
-            "Accident Count": [120, 95, 80, 65, 70, 140, 110, 90, 85, 75]
-            }
-        query_result   = get_top_accident_prone_locations(db_config)
-        print(query_result)
-        heat_fig = density_heatmap(data=query_result, x='Location', y='TotalCasualties', z="AccidentCount" ,title='Accident Frequency by Location & Time', theme=theme_cookies).to_html(include_plotlyjs="cdn")
-        plotly_html  = fig
+
+        # heat_fig = density_heatmap(data=query_result, x='Location', y='TotalCasualties', z="AccidentCount" ,title='Accident Frequency by Location & Time', theme=theme_cookies).to_html(include_plotlyjs="cdn")
+        # plotly_html  = fig
         return templates.TemplateResponse(
             "/components/dashboard-index.html", 
             {
@@ -172,7 +166,7 @@ def reports(request: Request):
             "get_avg_vehicles_by_road_condition": bar_chart(avg_vehicles_by_road_condition, "Road Condition", "Avg_Vehicles", "Avg Vehicles by Road Condition", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
             # Insights & Recommendations
             "get_common_accident_causes": pie_chart(common_accident_causes, "Cause", "Accident Count", "Accident Count by Cause", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
-            # "get_locations_needing_safety_improvements": density_heatmap(locations_needing_safety_improvements, x="Location", y="Road Condition ",z="Accident Count", title="Accident Count by Location", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
+            # "get_locations_needing_safety_improvements": line_chart(locations_needing_safety_improvements, x="Location", y=["Road Condition", "Accident Count"], title="Accident Count by Location", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
             
         }
 

@@ -142,6 +142,7 @@ def get_common_accident_causes(db_config: Dict[str, str]):
 
 
 #Which locations need road safety improvements?
+# FIX : using limit in query, combine data of all location together 
 def get_locations_needing_safety_improvements(db_config: Dict[str, str]):
     """Fetches the top 10 locations with the most accidents in hazardous road conditions."""
     
