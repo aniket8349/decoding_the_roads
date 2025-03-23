@@ -1,28 +1,28 @@
 {
-    "prescriptive_analysis": {
-        "accident_hotspots": {
-            "title": "Accident Hotspots",
-            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "chart_name": "Accident Hotspots"
-        },
-        "high_risk_times": {
-            "title": "High Risk Times",
-            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "chart_name": "High Risk Times"
-        },
-        "weather_related_accidents": {
-            "title": "Weather Related Accidents",
-            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "chart_name": "Weather Related Accidents"
-        },
-        "high_severity_accidents": {
-            "title": "High Severity Accidents",
-            "description": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "explination": "The root cause of the problem is the lack of a proper diagnosis. The problem is that the",
-            "chart_name": "High Severity Accidents"
-        }
+  "prescriptive_analysis": {
+    "accident_hotspots": {
+      "title": "Accident Hotspots",
+      "description": "🔥 **Heatmap Visualization:** Identifies accident hotspots by using **color intensity** to indicate accident frequencies. Darker or brighter areas reflect higher accident densities, helping to locate regions with frequent incidents.",
+      "explination": "**Why It Matters:**\n- Recognizes **high-risk locations** where accidents occur repeatedly, enabling authorities to implement safety measures like:\n  - Enhanced **road signage**\n  - Improved **lighting**\n  - Stricter **speed regulations**\n- Assists in optimizing **traffic flow** and **urban planning** by addressing accident-prone areas.\n- Useful for targeting critical zones like **intersections**, **highways**, and **busy urban areas** requiring immediate intervention.\n- Supports data-driven decision-making for policymakers, helping allocate resources effectively to reduce accident rates.",
+      "chart_name": "Heatmap of Accident Hotspots"
+    },
+    "high_risk_times": {
+      "title": "High Risk Times",
+      "description": "⏰ **Line Chart Analysis:** Illustrates accident frequency across various times of the day, highlighting **high-risk periods** with peak accident occurrences. The x-axis represents time, while the y-axis displays the number of accidents.",
+      "explination": "**Why It Matters:**\n- Identifies **peak accident periods**, such as:\n  - **Rush hours:** 7-9 AM, 5-8 PM\n  - **Late-night hours:** Increased risks due to reduced visibility and driver fatigue\n- Helps authorities implement:\n  - **Traffic control measures** during high-risk times\n  - **Awareness campaigns** to promote cautious driving\n  - **Stricter enforcement** to curb violations\n\n**Practical Applications:**\n- Enables policymakers and emergency responders to allocate resources more effectively, such as increasing patrols during peak hours.\n- The analysis can also highlight **seasonal** or **weather-related patterns**, assisting in tailored safety strategies.",
+      "chart_name": "Line Chart of High Risk Times"
+    },
+    "weather_related_accidents": {
+      "title": "Weather Related Accidents",
+      "description": "🌧️ **Grouped Bar Chart Analysis:** Compares accident occurrences under various weather conditions, such as **rain**, **fog**, **snow**, and **clear skies**. The grouped bars represent accident counts across these weather types, making it easy to spot trends and contrasts.",
+      "explination": "**Why It Matters:**\n- Highlights the impact of **adverse weather** on road safety, helping authorities understand which conditions contribute most to accidents.\n- Identifies critical weather-related risks like:\n  - **Rain:** Slippery roads and reduced visibility\n  - **Fog:** Limited sight distance\n  - **Snow/Ice:** Increased skidding incidents\n\n**Practical Applications:**\n- Assists in designing **weather-specific safety measures** like advisories, awareness campaigns, and speed regulation.\n- Road maintenance teams can prepare better for harsh weather, like deploying salt trucks before snowstorms.\n- Insurance companies can use this data to assess weather-related risk factors, adjusting policies accordingly.",
+      "chart_name": "Grouped Bar Chart of Weather Related Accidents"
+    },
+    "high_severity_accidents": {
+      "title": "High Severity Accidents",
+      "description": "🚨 **Bar Chart Analysis:** Displays the frequency of high-severity accidents, highlighting incidents with severe consequences like major injuries or fatalities. The x-axis categorizes accident severity levels, while the y-axis shows the number of accidents.",
+      "explination": "**Why It Matters:**\n- Identifies the extent and distribution of **severe accidents**, helping authorities prioritize safety measures for critical areas.\n- Analyzes the factors contributing to high-severity accidents, such as:\n  - **High-speed collisions**\n  - **Reckless driving**\n  - **Lack of safety measures**\n\n**Practical Applications:**\n- Guides policymakers in creating stricter regulations for accident-prone zones.\n- Supports the planning of awareness campaigns focused on preventing severe accidents.\n- Helps emergency services optimize response strategies to reduce fatalities and severe injuries.",
+      "chart_name": "Bar Chart of High Severity Accidents"
     }
+  }
 }
