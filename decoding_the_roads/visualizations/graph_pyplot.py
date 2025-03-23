@@ -6,77 +6,25 @@ from ..utils.logger import setup_logger
 from typing import List, Union
 logger = setup_logger(__name__)
 
-def sqlquery_to_dataframe(sql_query, x: str, y: Union[List[str], str], conn=None) -> pd.DataFrame:
-    """ 
-    Convert SQL query result or list of tuples into a DataFrame.
-
-    Args:
-        sql_query (str | list | DataFrame): SQL query string or already fetched data.
-        x (str): Column name for X-axis (category).
-        y (list | str): Single column or list of columns for Y-axis.
-        conn (optional): Database connection object.
-
-    Returns:
-        pd.DataFrame: Processed DataFrame.
-    """
+def sqlquery_to_dataframe(sql_query, x: str, y: Union[List[str], str]) -> pd.DataFrame:
     try:
-        # Execute SQL query if a database connection is provided
-        # if conn:
-        #     df = pd.read_sql(sql_query, conn)
-        # else:
-        #     df = pd.DataFrame(sql_query)  # Assuming sql_query is pre-fetched data
-
-        # # Handle empty or invalid data
-        # if df.empty:
-        #     logger.warning("SQL query returned no data.")
-        #     return pd.DataFrame(columns=[x] + ([y] if isinstance(y, str) else y))
-
-        # # If data is a list of tuples, set correct column names dynamically
-        # if isinstance(sql_query, list) and all(isinstance(row, tuple) for row in sql_query):
-        #     column_count = len(sql_query[0])
-
-        #     # If `y` is a string, convert it to a list
-        #     if isinstance(y, str):
-        #         y = [y]
-
-        #     expected_columns = [x] + y
-
-        #     if column_count != len(expected_columns):
-        #         raise ValueError(f"Expected {len(expected_columns)} columns ({expected_columns}), but got {column_count}.")
-
-        #     df = pd.DataFrame(sql_query, columns=expected_columns)
-
-        # # Validate that required columns exist
-        # missing_cols = {x} | set(y) - set(df.columns)
-        # if missing_cols:
-        #     raise ValueError(f"Missing columns in data: {missing_cols}")
-
-        # # Convert `x` column to string (for categorical values)
-        # df[x] = df[x].astype(str)
-
-        # # Convert `y` columns to numeric where applicable
-        # for col in y:
-        #     df[col] = pd.to_numeric(df[col], errors='coerce')
-
-        # # Sort by first Y-column if multiple columns are present
-        # df.sort_values(by=y[0], ascending=True, inplace=True)
-
-        # logger.info(f"DataFrame created successfully:\n{df.head()}")
-        # return df
         df = pd.DataFrame(sql_query)
 
-        # If DataFrame has only numerical column names, assign correct column names
-        if list(df.columns) == list(range(len(df.columns))):  # Checks if columns are [0, 1] or similar
-            df.columns = [x] + ([y] if isinstance(y, str) else y)  
+        # Ensure correct column names if unnamed (numeric column indices)
+        if list(df.columns) == list(range(len(df.columns))):
+            column_names = [x] + ([y] if isinstance(y, str) else y)
+            if len(df.columns) == len(column_names):
+                df.columns = column_names
+            else:
+                raise ValueError(f"Column length mismatch! Expected {len(column_names)}, but got {len(df.columns)}")
 
-        print(df.columns.tolist())  # Debugging output
-        # return df
-        # [x] + ([y] if isinstance(y, str) else y)
-        return pd.DataFrame(sql_query, columns=df.columns.tolist())
+        # print(df.head())  # Debugging output
+        # print("Final Columns:", df.columns.tolist())  # Debugging output
 
+        return df
     except Exception as e:
         logger.error(f"Error in sqlquery_to_dataframe: {e}")
-        return pd.DataFrame(columns=[x] + ([y] if isinstance(y, str) else y))  # Return empty DataFrame on failure
+        return pd.DataFrame(columns=[x] + ([y] if isinstance(y, str) else y))
 
 # chart theme
 def apply_chart_theme(fig, theme: str = "light") -> Figure:
@@ -100,10 +48,12 @@ def apply_chart_theme(fig, theme: str = "light") -> Figure:
     grid_width = 0.5
 
     fig.update_layout(
+        autosize=True,
         paper_bgcolor=selected_theme["bg_color"],  
         plot_bgcolor=selected_theme["inner_plot_color"],  
         font=dict(color=selected_theme["text_color"]),  
         title=dict(font=dict(size=20)),
+        margin=dict(l=20, r=20, t=20, b=20),
         xaxis=dict(
             showgrid=True, gridcolor=selected_theme["grid_color"], gridwidth=grid_width,
             zeroline=True, zerolinecolor=selected_theme["grid_color"], zerolinewidth=1
@@ -264,25 +214,64 @@ def categorical_axes_chart(data, x: str, y: str, category: str, title: str, them
 
 # density_heatmap
 
-def density_heatmap(data, x: str, y: str, z: str, title: str, theme: str ) -> Figure:
-    """ 
-    Function to create a density heatmap
-    args:
-        data: Dict
-        x: str
-        y: str
-        title: str
-
-    returns:
-        fig: Figure 
-    """
+def density_heatmap(data, x: str, y: str, z: str, title: str, theme: str):
     try:
-        df = sqlquery_to_dataframe(data, x, y)
-        fig: Figure = px.density_heatmap(df, x=x, y=y, z=z, title=title ,  color_continuous_scale="Blues")
-        apply_chart_theme(fig, theme)  # Apply global theme
+        # Convert SQL query result to DataFrame
+        df = sqlquery_to_dataframe(data, x, [y, z])  # y and z are lists
+
+        # Debugging: Print the DataFrame structure
+        print(df.head())
+        print("Columns in DataFrame:", df.columns.tolist())
+
+        # Check if the required columns exist in the DataFrame
+        if z not in df.columns:
+            raise ValueError(f"Column '{z}' not found in DataFrame! Available columns: {df.columns.tolist()}")
+
+        # Create density heatmap
+        fig = px.density_heatmap(
+            df,
+            x=x,  # Location
+            y=y,  # Accident Count
+            z=z,  # Total Casualties
+            title=title,
+            color_continuous_scale="Blues"
+        )
+
+        apply_chart_theme(fig, theme)  # Apply theme
         return fig
     except Exception as e:
         logger.error(f"Error in density_heatmap: {e}")
+        return None  # Avoid returning broken objects
+# scatter_geo 
+
+def scatter_geo(data, lat: str, lon: str, title: str, theme: str):
+    try:
+        # Convert SQL query result to DataFrame
+        df = sqlquery_to_dataframe(data, lat, lon)  # lat and lon are lists
+
+        # Debugging: Print the DataFrame structure
+        print(df.head())
+        print("Columns in DataFrame:", df.columns.tolist())
+
+        # Check if the required columns exist in the DataFrame
+        if lat not in df.columns:
+            raise ValueError(f"Column '{lat}' not found in DataFrame! Available columns: {df.columns.tolist()}")
+
+        # Create scatter_geo plot
+        fig = px.scatter_geo(
+            df,
+            lat=lat,  # Latitude
+            lon=lon,  # Longitude
+            title=title,
+            projection="natural earth"
+        )
+
+        apply_chart_theme(fig, theme)  # Apply theme
+        return fig
+    except Exception as e:
+        logger.error(f"Error in scatter_geo: {e}")
+        return None  # Avoid returning broken objects
+    
 
 if __name__ == "__main__":
     fig = line_chart(data={'x': [1, 2, 3, 4, 5], 'y': [2, 4, 1, 5, 3]}, x='x', y='y', title='Sample Plotly Chart')

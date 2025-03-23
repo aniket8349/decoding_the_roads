@@ -18,8 +18,8 @@
         </p>
 
         <!-- table -->
-        <div class="relative overflow-x-auto lg:overflow-y-scroll">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right  overflow-y text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         {% for key in missing_data.keys() %}
@@ -70,7 +70,7 @@
         </p>
 
         <!-- Chart -->
-        <div class="flex mt-4 items-center justify-center">
+        <div class="w-full md:w-3/4 lg:w-2/3 h-auto rounded-md">
             {{ charts[key] | safe }}
         </div>
     </a>

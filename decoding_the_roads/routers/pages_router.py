@@ -1,8 +1,7 @@
 import json
 import os
-from fastapi import APIRouter, HTTPException, Request , Response
-from fastapi.responses import HTMLResponse , JSONResponse
-from mysql.connector import MySQLConnection
+from fastapi import APIRouter, HTTPException, Request 
+from fastapi.responses import HTMLResponse 
 from fastapi.templating import Jinja2Templates
 import plotly.express as px
 import pandas as pd
@@ -21,8 +20,9 @@ from ..data_analysis.diagnostic_analysis.diagnostic_report import get_avg_casual
 from ..data_analysis.diagnostic_analysis.prespective_report import get_accident_hotspots , get_high_risk_times , get_weather_related_accidents , get_high_severity_accidents
 from ..data_analysis.accidents_hotspot import accident_hotspots_by_weather , accident_hotspots_by_month
 from ..data_analysis.location import location_cause_casualties , casualties_by_location_weather , casualties_by_location_road_condition
-from ..data_analysis.dashboard_card_query import get_total_accidents_count , get_highest_accident_locations , get_highest_casualties_weather , get_highest_casualties_cause
+from ..data_analysis.dashboard_card_query import get_total_accidents_casualties_by_year , get_total_accidents_count , get_highest_accident_locations , get_highest_casualties_weather , get_highest_casualties_cause
 from ..constant.constant import CONTENT_JSON , DIAGNOSTIC_ANALYSIS , PERSPECTIVE_ANALYSIS
+from ..utils.percentile_calc import calculate_percentage_increase
 router = APIRouter()
 templates = Jinja2Templates(directory="decoding_the_roads/templates")
 
@@ -35,20 +35,7 @@ async def read_items(request: Request):
         return templates.TemplateResponse("pages/main.html", {"request": request})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-@router.post("/dark-mode")
-async def dark_mode(request: Request):
-    try:
-        cookies = request.headers.get("cookie", "")
-        # Extract theme from cookies
-        for cookie in cookies.split(";"):
-            if "theme=" in cookie:
-                theme = cookie.split("=")[1].strip()
-        # print(mode)
-        print(cookies)
-        return JSONResponse(content={"message": f"Received mode: {cookies}"})
-    except Exception as e: 
-        raise HTTPException(status_code=500, detail=str(e))
+
 
 @router.get("/dashboard", response_class=HTMLResponse)
 async def dashboard(request: Request):
@@ -65,47 +52,47 @@ async def reports(request: Request):
     # cookies
     theme_cookies = request.cookies.get("theme", "light")
  
-    get_total_accidents = get_total_accidents_count(db_config)
-    get_highest_accident_by_locations = list(get_highest_accident_locations(db_config)[0]) 
-    get_highest_casualties_by_weather = list(get_highest_casualties_weather(db_config)[0])
-    get_highest_casualties_by_cause = list(get_highest_casualties_cause(db_config)[0])
+    total_accidents_casualties_year = list(get_total_accidents_casualties_by_year(db_config))
+    get_highest_accident_by_locations = list(get_highest_accident_locations(db_config)) 
+    get_highest_casualties_by_weather = list(get_highest_casualties_weather(db_config))
+    get_highest_casualties_by_cause = list(get_highest_casualties_cause(db_config))
 
     # Total_Accidents 
-
+    print()
     # tailwind color 
     get_green = "text-green-500 dark:text-green-500"
     get_red = "text-red-500 dark:text-red-500"
     try:
         card_data = {
             "card1": {
-                "title": "Total Accidents",
-                "value": get_total_accidents,
-                "description": "Total number of accidents in year 2023 and 2024",
-                "percentage_change": 12,
+                "title": "Total Accidents in 2024",
+                "value": total_accidents_casualties_year[1][1],
+                "description": "Slight rise in accidents in 2024 compared to 2023.",
+                "percentage_change": calculate_percentage_increase(total_accidents_casualties_year[1][1],total_accidents_casualties_year[0][1]),
                 "icon": "fas fa-car",
                 "color": get_red,
             },
             "card2": {
-                "title": "Location",
-                "value": get_highest_accident_by_locations[1],
-                "description": "Location with the highest accident count",
-                "percentage_change": 10,
+                "title": "Accident Location",
+                "value": get_highest_accident_by_locations[0][1],
+                "description": f"{get_highest_accident_by_locations[0][0]} records the most accidents, surpassing {get_highest_accident_by_locations[1][0]} ",
+                "percentage_change": calculate_percentage_increase(get_highest_accident_by_locations[0][1],get_highest_accident_by_locations[1][1]),
                 "icon": "fas fa-ambulance",
                 "color": get_red,
             },
             "card3": {
-                "title": "Weather",
-                "value": get_highest_casualties_by_weather[1],
-                "description": "Weather condition with the highest casualties",
-                "percentage_change": 5,
+                "title": "Casualties by Weather",
+                "value": get_highest_casualties_by_weather[0][1],
+                "description": f"{get_highest_casualties_by_weather[0][0]} has the highest number of casualties, surpassing {get_highest_casualties_by_weather[1][0]}.",
+                "percentage_change": calculate_percentage_increase(get_highest_casualties_by_weather[0][1],get_highest_casualties_by_weather[1][1]),
                 "icon": "fas fa-car",
                 "color": get_red,
             },
             "card4": {
-                "title": "Cause",
-                "value": get_highest_casualties_by_cause[1],
-                "description": "Cause with the highest casualties",
-                "percentage_change": 2,
+                "title": "Casualties by Cause",
+                "value": get_highest_casualties_by_cause[0][1],
+                "description": f"{get_highest_casualties_by_cause[0][0]} the highest casualty count, followed by {get_highest_casualties_by_cause[1][0]}.",
+                "percentage_change": calculate_percentage_increase(get_highest_casualties_by_cause[0][1],get_highest_casualties_by_cause[1][1]),
                 "icon": "fas fa-user",
                 "color": get_red,
             },
@@ -120,7 +107,9 @@ async def reports(request: Request):
             "Time of Day": ["Morning", "Morning", "Morning", "Morning", "Morning", "Evening", "Evening", "Evening", "Evening", "Evening"],
             "Accident Count": [120, 95, 80, 65, 70, 140, 110, 90, 85, 75]
             }
-        heat_fig = density_heatmap(data=data, x='Location', y='Time of Day', z="Accident Count" ,title='Accident Frequency by Location & Time', theme=theme_cookies).to_html(include_plotlyjs="cdn")
+        query_result   = get_top_accident_prone_locations(db_config)
+        print(query_result)
+        heat_fig = density_heatmap(data=query_result, x='Location', y='TotalCasualties', z="AccidentCount" ,title='Accident Frequency by Location & Time', theme=theme_cookies).to_html(include_plotlyjs="cdn")
         plotly_html  = fig
         return templates.TemplateResponse(
             "/components/dashboard-index.html", 
@@ -175,7 +164,7 @@ def reports(request: Request):
         # locations_needing_safety_improvements = get_locations_needing_safety_improvements(db_config)
         # Create Plotly charts
         charts = {
-            "get_top_accident_prone_locations": line_chart(accident_prone_locations, "Location", ["Accident Count", "Total Casualties"], "Top Accident Prone Locations",theme=theme_cookies).to_html(include_plotlyjs="cdn"),
+            "get_top_accident_prone_locations": density_heatmap(accident_prone_locations, x="Location", y="Accident Count", z="Total Casualties", title="Top Accident Prone Locations",theme=theme_cookies).to_html(include_plotlyjs="cdn"),
             "get_most_dangerous_times": line_chart(accident_counts_by_time_period, "TimePeriod", ["Accident Count"], "Accident Count by Time Period", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
             "get_most_dangerous_weather_conditions": bar_chart(avg_casualties_by_weather, "Weather Condition", "Avg_Casualties", "Avg Casualties by Weather", theme=theme_cookies).to_html(include_plotlyjs="cdn"),
             # Hypothesis Testing
@@ -216,8 +205,8 @@ def reports(request: Request):
         high_severity_accidents = get_high_severity_accidents(db_config)
 
         prescriptive_chart =  {
-            "accident_hotspots": bar_chart(accident_hotspots, "Location", "Accident Count", "Accident Hotspots", theme=theme_cookies ).to_html(include_plotlyjs="cdn"),
-            "high_risk_times": bar_chart(high_risk_times, "Hour", "Accident Count", "High Risk Times", theme=theme_cookies ).to_html(include_plotlyjs="cdn"),
+            "accident_hotspots": bar_chart(accident_hotspots,x="Location", y="Accident Count", title="Locations with the highest accident occurrences.", theme=theme_cookies ).to_html(include_plotlyjs="cdn"),
+            "high_risk_times": line_chart(high_risk_times,x= "Hour", y="Accident Count", title="Peak hours for accidents.", theme=theme_cookies ).to_html(include_plotlyjs="cdn"),
             "weather_related_accidents": bar_chart(weather_related_accidents, "Weather Condition", "Accident Count", "Weather Related Accidents", theme=theme_cookies ).to_html(include_plotlyjs="cdn"),
             "high_severity_accidents": bar_chart(high_severity_accidents, "Road Condition", "Avg Casualties", "High Severity Accidents", theme=theme_cookies ).to_html(include_plotlyjs="cdn"),
         }

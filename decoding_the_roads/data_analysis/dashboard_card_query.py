@@ -2,6 +2,24 @@ from typing import Dict , List ,Tuple
 from ..utils.sql_utils import fetch_query_results , execute_query   
 
 
+def get_total_accidents_casualties_by_year(db_config: Dict[str, str]) -> List[Tuple[int, int]]:
+    """Fetches the total number of accidents and casualties by year."""
+    
+    query = """
+    SELECT 
+    YEAR(`Date`) AS `Year`,  
+    COUNT(*) AS `TotalAccidents`, 
+    SUM(`Casualties`) AS `TotalCasualties`
+    FROM global_traffic_accidents
+    WHERE `Date` IS NOT NULL
+    GROUP BY YEAR(`Date`)
+    ORDER BY YEAR(`Date`);
+    """
+    
+    # Fetch results
+    results = fetch_query_results(db_config, query)
+    
+    return results
 
 def get_total_accidents_count(db_config: Dict[str, str]) -> int:
     """Fetches the total number of accidents in the database."""
@@ -24,7 +42,7 @@ def get_highest_accident_locations(db_config: Dict[str, str]) -> List [Tuple[str
     FROM global_traffic_accidents 
     GROUP BY `Location`
     ORDER BY AccidentCount DESC 
-    LIMIT 1;
+    LIMIT 2;
     """
     
     # Fetch results
@@ -41,7 +59,7 @@ def get_highest_casualties_weather(db_config: Dict[str, str]) -> List [Tuple[str
     WHERE `Weather Condition` IS NOT NULL
     GROUP BY `Weather Condition`
     ORDER BY TotalCasualties DESC 
-    LIMIT 1;
+    LIMIT 2;
     """
     
     # Fetch results
@@ -58,7 +76,7 @@ def get_highest_casualties_cause(db_config: Dict[str, str]) -> List [Tuple[str,i
     WHERE `Cause` IS NOT NULL
     GROUP BY `Cause`
     ORDER BY TotalCasualties DESC 
-    LIMIT 1;
+    LIMIT 2;
     """
     
     # Fetch results

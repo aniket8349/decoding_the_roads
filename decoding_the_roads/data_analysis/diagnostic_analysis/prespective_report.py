@@ -16,7 +16,7 @@ GROUP BY Latitude, Longitude
 ORDER BY Accident_Count DESC;
 """
     results = fetch_query_results(db_config, query)
-
+# TODO only two coloumn for density map need three coloumn
 def get_accident_hotspots(db_config: Dict[str, str]):            #get_accident_prone_location
     """Finds locations with the highest accident occurrences."""
     
