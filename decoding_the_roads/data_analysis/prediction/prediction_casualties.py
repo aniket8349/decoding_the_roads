@@ -1,18 +1,21 @@
+import os
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-import os
 
-def predict_casualties(csv_file):
+from ...constant.constant import DATA_DIR
+def predict_casualties():
     #  Check if file exists
-    if not os.path.exists(csv_file):
-        print("Error: File not found. Please provide the correct path.")
-        return
+    # if not os.path.exists(csv_file):
+    #     print("Error: File not found. Please provide the correct path.")
+    #     return
 
     #  Load dataset
+    csv_file: str = os.path.join(DATA_DIR, "global_traffic_accidents.csv")
+    
     df = pd.read_csv(csv_file)
 
     #  Normalize column names
@@ -83,5 +86,5 @@ def predict_casualties(csv_file):
 
 #  Run the script
 if __name__ == "__main__":
-    csv_path = input("Enter path to accident data CSV file: ").strip()
-    predict_casualties(csv_path)
+
+    predict_casualties()
